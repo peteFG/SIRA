@@ -6,6 +6,10 @@ import { IonicModule } from '@ionic/angular';
 
 import { PagesRoutingModule } from './pages-routing.module';
 import { HomePage } from './home/home.page';
+import { StatsPage } from './stats/stats.page';
+import { LawPage } from './law/law.page';
+import { RoutePage } from './route/route.page';
+import { AidPage } from './aid/aid.page';
 
 
 @NgModule({
@@ -15,6 +19,6 @@ import { HomePage } from './home/home.page';
     IonicModule,
     PagesRoutingModule
   ],
-  declarations: [HomePage]
+  declarations: [HomePage, StatsPage, LawPage, RoutePage, AidPage]
 })
 export class PagesModule {}
