@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -7,10 +8,10 @@ import { Component } from '@angular/core';
 export class AppComponent {
   public appPages = [
     { title: 'Home', url: '/home', icon: 'home' },
-    { title: 'Route finden', url: '/route', icon: 'home' },
-    { title: 'Gesetze', url: '/law', icon: 'home' },
-    { title: 'Erste Hilfe', url: '/aid', icon: 'home' },
-    { title: 'Statistiken', url: '/stats', icon: 'home' },
+    { title: 'Route', url: '/route', icon: 'swap-horizontal' },
+    { title: 'Gesetze', url: '/law', icon: 'book' },
+    { title: 'Erste Hilfe', url: '/aid', icon: 'add-circle' },
+    { title: 'Statistiken', url: '/stats', icon: 'stats-chart' }
   ];
   constructor() {}
 }

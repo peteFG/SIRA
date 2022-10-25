@@ -1,36 +1,39 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AidPage } from './pages/aid/aid.page';
-import { HomePage } from './pages/home/home.page';
 import { LawPage } from './pages/law/law.page';
 import { RoutePage } from './pages/route/route.page';
 import { StatsPage } from './pages/stats/stats.page';
 
 const routes: Routes = [
   {
-    path: '',
-    redirectTo: '/home',
-    pathMatch: "full"
-  },
-  {
     path: 'home',
-    component: HomePage
+    loadChildren: () => import('./pages/pages.module').then( m => m.PagesModule)
   },
   {
-    path: 'aid',
-    component: AidPage
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
   },
   {
     path: 'law',
-    component: LawPage
+    component: LawPage,
+    loadChildren: () => import('./pages/pages.module').then( m => m.PagesModule)
   },
   {
-    path: 'stats',
-    component: StatsPage
+    path: 'aid',
+    component: AidPage,
+    loadChildren: () => import('./pages/pages.module').then( m => m.PagesModule)
   },
   {
     path: 'route',
-    component: RoutePage
+    component: RoutePage,
+    loadChildren: () => import('./pages/pages.module').then( m => m.PagesModule)
+  },
+  {
+    path: 'stats',
+    component: StatsPage,
+    loadChildren: () => import('./pages/pages.module').then( m => m.PagesModule)
   }
 ];
 
@@ -40,4 +43,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
