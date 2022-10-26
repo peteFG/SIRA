@@ -75,3 +75,9 @@
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
 }
+
+.flex-center-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
