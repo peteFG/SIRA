@@ -98,6 +98,12 @@ namespace Context.Repositories
 
             return default;
         }
+        
+        //TODO: remove if not needed
+        public async Task InsertManyAsync(IEnumerable<TEntity> documents)
+        {
+            await _collection.InsertManyAsync(documents);
+        }
 
 
         public virtual async Task<TEntity> UpdateOneAsync(TEntity document)

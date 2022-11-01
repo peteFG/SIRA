@@ -12,6 +12,7 @@ namespace Context.Repositories
         Task<TEntity> FindByIdAsync(string id);
 
         Task<TEntity> InsertOneAsync(TEntity document);
+        Task InsertManyAsync(IEnumerable<TEntity> documents);
 
         Task<TEntity> UpdateOneAsync(TEntity document);
 

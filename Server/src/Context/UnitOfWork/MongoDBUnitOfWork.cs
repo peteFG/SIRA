@@ -20,5 +20,8 @@ namespace Context.UnitOfWork
         }
 
         public ISampleRepository Samples => new SampleRepository(Context);
+        public IInfoRepository Infos => new InfoRepository(Context);
+        public ISubmittedDataRepository SubmittedDataPoints => new SubmittedDataRepository(Context);
+        public ISensorDataRepository SensorDataPoints => new SensorDataRepository(Context);
     }
 }
