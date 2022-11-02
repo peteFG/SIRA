@@ -36,7 +36,7 @@ namespace API.Controllers
 
             return NotFound();
         }
-        
+
         /// <summary>
         /// Reads the OBS CSV into the local database.
         /// If datapoint is empty a 404 is raised.
@@ -59,29 +59,26 @@ namespace API.Controllers
             using (var csv = new CsvReader(reader, config))
             {
                 var records = csv.GetRecords<SensorDataMixin>().ToList();
-                foreach (var sensorDataPoint in records.Select(record => new SensorData
-                         {
-                             Altitude = record.Altitude,
-                             Date = record.Date,
-                             DistanceLeft = record.DistanceLeft,
-                             DistanceRight = record.DistanceRight,
-                             Measurements = record.Measurements,
-                             Speed = record.Speed,
-                             Timestamp = record.Timestamp,
-                             XCoord = record.XCoord,
-                             YCoord = record.YCoord
-                         }))
+                dataPoints.AddRange(records.Select(record => new SensorData
                 {
-                    dataPoints.Add(sensorDataPoint);
-                    //TODO: evtl besseres inserten -> ohne mixin?
-                    await mongo.SensorDataPoints.InsertOneAsync(sensorDataPoint);
-                }
+                    Altitude = record.Altitude,
+                    Date = record.Date,
+                    DistanceLeft = record.DistanceLeft,
+                    DistanceRight = record.DistanceRight,
+                    Measurements = record.Measurements,
+                    Speed = record.Speed,
+                    Timestamp = record.Timestamp,
+                    XCoord = record.XCoord,
+                    YCoord = record.YCoord
+                }));
             }
-            
+            await mongo.SensorDataPoints.InsertManyAsync(dataPoints);
+
             if (!dataPoints.IsNullOrEmpty())
             {
                 return Ok();
             }
+
             return NotFound();
         }
 

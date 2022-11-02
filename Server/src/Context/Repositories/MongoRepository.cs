@@ -78,7 +78,7 @@ namespace Context.Repositories
             return await _collection.Find(filter).SingleOrDefaultAsync();
         }
 
-        public async virtual Task<TEntity> InsertOneAsync(TEntity document)
+        public virtual async Task<TEntity> InsertOneAsync(TEntity document)
         {
             try
             {
@@ -102,7 +102,11 @@ namespace Context.Repositories
         //TODO: remove if not needed
         public async Task InsertManyAsync(IEnumerable<TEntity> documents)
         {
-            await _collection.InsertManyAsync(documents);
+            foreach (var document in documents)
+            {
+                await InsertOneAsync(document);
+            }
+            //await _collection.InsertManyAsync(documents);
         }
 
 
