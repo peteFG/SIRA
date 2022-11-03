@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./app-footer.component.scss'],
 })
 export class AppFooterComponent implements OnInit {
-  constructor(private router: Router) {}
+  constructor(public router: Router) {}
 
   ngOnInit() {}
 
