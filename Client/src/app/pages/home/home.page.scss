@@ -25,3 +25,70 @@
 #container a {
   text-decoration: none;
 }
+
+.home-image-container {
+  height: 45%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.home-image-container::before {
+  content: "";
+  background-image: url("../../../assets/biker.jpg");
+  background-size: cover;
+  opacity: .3;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.home-text-paragraph {
+  position: relative;
+  font-size: 50px;
+  color: #537953;
+  text-align: center;
+}
+
+.home-routing-line {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  padding: 40px;
+  height: 50%;
+  padding: 20px;
+}
+
+.home-routing-line:first-child {
+  padding-bottom: 10px;
+}
+
+.home-routing-line:last-child {
+  padding-top: 10px;
+}
+
+.home-routing-outer-container {
+  height: 55%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.home-routing-item {
+  background-color: #EAEFE1;
+  width: 50%;
+  margin-left: 10px;
+  margin-right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #537953;
+  font-size: 20px;
+  font-weight: 700;
+  border-radius: 10px;
+}
