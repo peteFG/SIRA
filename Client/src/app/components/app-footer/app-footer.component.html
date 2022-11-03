@@ -1,5 +1,10 @@
 <ion-footer>
-    <ion-toolbar class="toolbar-container">
-      <ion-title>Footer</ion-title>
-    </ion-toolbar>
-  </ion-footer>
+  <ion-toolbar class="toolbar-container">
+    <div class="footer-menu-container">
+      <div (click)="onItemClicked('route')">Route</div>
+      <div (click)="onItemClicked('stats')">Stats</div>
+      <div (click)="onItemClicked('law')">Law</div>
+      <div (click)="onItemClicked('aid')">Aid</div>
+    </div>
+  </ion-toolbar>
+</ion-footer>

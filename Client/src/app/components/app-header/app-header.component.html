@@ -1,11 +1,9 @@
 <ion-header [translucent]="true" mode="md">
   <ion-toolbar class="toolbar-container">
-    <ion-buttons class="ion-buttons-container" slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
     <ion-title class="title-container">
       <div class="flex-center-container">
-        <img class="header-logo-container" alt="SIRA Logo" src="../../../assets/icon/logo_white.svg" />
+        <img class="header-logo-container" (click)="onLogoClicked()" alt="SIRA Logo"
+          src="../../../assets/icon/logo_white.svg" />
       </div>
     </ion-title>
   </ion-toolbar>
