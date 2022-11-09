@@ -6,12 +6,20 @@
     </div>
     <div class="home-routing-outer-container">
       <div class="home-routing-line">
-        <div class="home-routing-item" (click)="onItemClicked('route')">Route finden</div>
-        <div class="home-routing-item" (click)="onItemClicked('stats')">Daten</div>
+        <div class="home-routing-item" (click)="onItemClicked('route')">
+            <ion-icon name="map" class="home-menu-icon"></ion-icon>
+            Route finden</div>
+        <div class="home-routing-item" (click)="onItemClicked('stats')">
+            <ion-icon name="pie-chart"  class="home-menu-icon"></ion-icon>
+            Daten</div>
       </div>
       <div class="home-routing-line">
-        <div class="home-routing-item" (click)="onItemClicked('law')">Gesetze</div>
-        <div class="home-routing-item" (click)="onItemClicked('aid')">1. Hilfe</div>
+        <div class="home-routing-item" (click)="onItemClicked('law')">
+            <ion-icon name="document-text" class="home-menu-icon"></ion-icon>
+            Gesetze</div>
+        <div class="home-routing-item" (click)="onItemClicked('aid')">
+            <ion-icon name="bag-add" class="home-menu-icon"></ion-icon>
+            1. Hilfe</div>
       </div>
     </div>
   </div>

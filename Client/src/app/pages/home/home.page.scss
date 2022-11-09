@@ -27,7 +27,7 @@
 }
 
 .home-image-container {
-  height: 45%;
+  height: 50%;
   position: relative;
   display: flex;
   justify-content: center;
@@ -72,11 +72,12 @@
 }
 
 .home-routing-outer-container {
-  height: 55%;
+  height: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
+  padding: 1em 0;
 }
 
 .home-routing-item {
@@ -91,4 +92,12 @@
   font-size: 20px;
   font-weight: 700;
   border-radius: 10px;
+  display: flex;
+    flex-direction: column;
+}
+
+.home-menu-icon {
+    width: 60%;
+    height: 40%;
+    margin-bottom: 1em;
 }
