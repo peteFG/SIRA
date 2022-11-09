@@ -58,9 +58,11 @@ namespace API.Controllers
             using (var reader = new StreamReader(Path.GetFullPath(filePath)))
             using (var csv = new CsvReader(reader, config))
             {
+                //TODO: filename abspeichern -> id für Fahrt
                 var records = csv.GetRecords<SensorDataMixin>().ToList();
                 dataPoints.AddRange(records.Select(record => new SensorData
                 {
+                    //ID
                     Altitude = record.Altitude,
                     Date = record.Date,
                     DistanceLeft = record.DistanceLeft,
@@ -68,10 +70,12 @@ namespace API.Controllers
                     Measurements = record.Measurements,
                     Speed = record.Speed,
                     Timestamp = record.Timestamp,
+                    Marked = record.Marked,
                     XCoord = record.XCoord,
                     YCoord = record.YCoord
                 }));
             }
+
             await mongo.SensorDataPoints.InsertManyAsync(dataPoints);
 
             if (!dataPoints.IsNullOrEmpty())

@@ -16,7 +16,10 @@ public class SensorDataMixin
 
     [Name("Time")] 
     public string Timestamp { get; set; }
-
+    
+    [Name("Marked")]
+    public string Marked { get; set; }
+    
     [Name("Altitude")] 
     public float? Altitude { get; set; }
 
