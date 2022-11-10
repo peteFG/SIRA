@@ -12,7 +12,7 @@ public class LawSeeding : BaseUnitTests
     {
         Info law = new Info();
 
-        law.Category = "Law";
+        law.Category = Category.Law;
         law.Section = "33. StVO-Novelle";
         law.Title = "Gesetzlich definierter Überholabstand";
         law.Text =
@@ -37,7 +37,7 @@ public class LawSeeding : BaseUnitTests
     {
         Info law = new Info();
 
-        law.Category = "Law";
+        law.Category = Category.Law;
         law.Section = "33. StVO-Novelle";
         law.Title = "Grünpfeil fürs Rad an Ampeln";
         law.Text =
@@ -64,7 +64,7 @@ public class LawSeeding : BaseUnitTests
     {
         Info law = new Info();
 
-        law.Category = "Law";
+        law.Category = Category.Law;
         law.Section = "33. StVO-Novelle";
         law.Title = "Nebeneinander Radfahren erlaubt ";
         law.Text =
@@ -92,7 +92,7 @@ public class LawSeeding : BaseUnitTests
     {
         Info law = new Info();
 
-        law.Category = "Law";
+        law.Category = Category.Law;
         law.Section = "33. StVO-Novelle";
         law.Title = "Annäherungen an Radfahrüberfahrten";
         law.Text =
@@ -116,7 +116,7 @@ public class LawSeeding : BaseUnitTests
     {
         Info law = new Info();
 
-        law.Category = "Law";
+        law.Category = Category.Law;
         law.Section = "33. StVO-Novelle";
         law.Title = "Mit-Nutzung von Radwegen rechtlich möglich";
         law.Text = "Die Behörde kann zukünftig das Befahren von Radfahranlagen mit " +
@@ -132,7 +132,7 @@ public class LawSeeding : BaseUnitTests
     {
         Info law = new Info();
 
-        law.Category = "Law";
+        law.Category = Category.Law;
         law.Section = "33. StVO-Novelle";
         law.Title = "Durchfahrt von Kfz in Fahrradstraßen kann ermöglicht werden";
         law.Text =
@@ -147,7 +147,7 @@ public class LawSeeding : BaseUnitTests
     {
         Info law = new Info();
 
-        law.Category = "Law";
+        law.Category = Category.Law;
         law.Section = "33. StVO-Novelle";
         law.Title = "Reißverschlussprinzip statt Sondernachrang bei parallel einmündenden Radwegen";
         law.Text =
@@ -161,7 +161,7 @@ public class LawSeeding : BaseUnitTests
     {
         Info law = new Info();
 
-        law.Category = "Law";
+        law.Category = Category.Law;
         law.Section = "33. StVO-Novelle";
         law.Title = "Eindämmung überzogener Strafen bei Ausstattungsmängeln";
         law.Text =
@@ -176,7 +176,7 @@ public class LawSeeding : BaseUnitTests
     {
         Info law = new Info();
 
-        law.Category = "Law";
+        law.Category = Category.Law;
         law.Section = "33. StVO-Novelle";
         law.Title = "Das Hineinragen in Radwege wird verboten, in Gehwege deutlich eingeschränkt";
         law.Text =

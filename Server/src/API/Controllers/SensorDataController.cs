@@ -7,6 +7,7 @@ using CsvHelper;
 using CsvHelper.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using MongoDB.Bson;
 
 namespace API.Controllers
 {
@@ -43,32 +44,44 @@ namespace API.Controllers
         /// </summary>
         [HttpPost("ParseSensorData")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> ParseSensorData()
+        public async Task<ActionResult> ParseSensorData(IFormFile file)
         {
+            if (file == null || file.Length == 0 || file.FileName.IsNullOrEmpty())
+            {
+                return BadRequest("File is empty.");
+            }
+
+            if (!Path.GetExtension(file.FileName).Equals(".csv"))
+            {
+                return BadRequest("File can only be of datatype CSV.");
+            }
+
             var dataPoints = new List<SensorData>();
             var config = new CsvConfiguration(CultureInfo.InvariantCulture)
             {
-                HasHeaderRecord = true,
+                HasHeaderRecord = false,
                 Delimiter = ";",
-                //MissingFieldFound = null
+                MissingFieldFound = null
             };
-            var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
-                @"..\..\..\..\Utilities\data\2021-12-15T10.37.17-88c5.obsdata.csv");
-            using (var reader = new StreamReader(Path.GetFullPath(filePath)))
+            var fileName = Path.GetFileName(file.FileName);
+            fileName = fileName[..(fileName.LastIndexOf("o", StringComparison.Ordinal) - 1)];
+            //TODO: maybe better filename?
+            var rideId = fileName + "\\" + ObjectId.GenerateNewId().ToString();
+            using (var reader = new StreamReader(file.OpenReadStream()))
             using (var csv = new CsvReader(reader, config))
             {
-                //TODO: filename abspeichern -> id für Fahrt
                 var records = csv.GetRecords<SensorDataMixin>().ToList();
                 dataPoints.AddRange(records.Select(record => new SensorData
                 {
-                    //ID
-                    Altitude = record.Altitude,
+                    RideId = rideId,
                     Date = record.Date,
-                    DistanceLeft = record.DistanceLeft,
-                    DistanceRight = record.DistanceRight,
-                    Measurements = record.Measurements,
-                    Speed = record.Speed,
+                    DistanceLeft = record.DistanceLeft, //.IsNullOrEmpty() ? 0 : int.Parse(record.DistanceLeft),
+                    DistanceRight = record.DistanceRight, //.IsNullOrEmpty() ? 0 : int.Parse(record.DistanceRight),
+                    Measurements = record.Measurements, //.IsNullOrEmpty() ? 0 : int.Parse(record.Measurements),
+                    Speed = record.Speed, //.IsNullOrEmpty() ? 0f : float.Parse(record.Speed),
+                    Altitude = record.Altitude, //.IsNullOrEmpty() ? 0f : float.Parse(record.Altitude),
                     Timestamp = record.Timestamp,
                     Marked = record.Marked,
                     XCoord = record.XCoord,
@@ -76,14 +89,16 @@ namespace API.Controllers
                 }));
             }
 
-            await mongo.SensorDataPoints.InsertManyAsync(dataPoints);
-
-            if (!dataPoints.IsNullOrEmpty())
+            try
             {
-                return Ok();
+                await mongo.SensorDataPoints.InsertManyAsync(dataPoints);
+            }
+            catch (Exception e)
+            {
+                return BadRequest("Can not upload entries, file seems to be faulty.\n Error Message:\n" + e);
             }
 
-            return NotFound();
+            return Ok();
         }
 
 
