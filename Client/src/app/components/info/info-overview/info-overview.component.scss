@@ -3,13 +3,14 @@
     flex-wrap: wrap;
     padding: 1.5em;
     overflow: auto;
+    align-content: flex-start;
 }
 
 .info-item-container {
     width: 50%;
     flex: 0 50%;
-    min-height: 25%;
-    padding: 1em;
+    height: 25%;
+    padding: .5em;
 }
 
 .info-item-inner-container {
@@ -33,4 +34,9 @@
     height: 60px;
     width: 60px;
     margin-bottom: .5em;
+}
+
+ion-searchbar {
+    height: 60px;
+    --border-radius: 10px;
 }

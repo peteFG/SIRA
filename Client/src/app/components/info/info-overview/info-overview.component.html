@@ -1,7 +1,9 @@
 <div class="full-size-container info-outer-container">
-    <div *ngFor="let info of infoList" class="info-item-container">
+    <ion-searchbar (ionChange)="filterList($event)" placeholder="Suche ..."></ion-searchbar>
+    <div *ngFor="let info of filteredInfoList" class="info-item-container">
         <div class="info-item-inner-container">
-            <ion-icon name="document-text" class="info-menu-icon"></ion-icon>
+            <ion-icon *ngIf="!info.icon" name="document-text" class="info-menu-icon"></ion-icon>
+            <ion-icon *ngIf="info.icon" [name]="info.icon" class="info-menu-icon"></ion-icon>
             {{info.title}}
         </div>
     </div>

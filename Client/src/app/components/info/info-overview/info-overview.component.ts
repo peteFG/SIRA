@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { Info } from 'src/app/backend/info.service';
 
@@ -7,10 +7,23 @@ import { Info } from 'src/app/backend/info.service';
   templateUrl: './info-overview.component.html',
   styleUrls: ['./info-overview.component.scss'],
 })
-export class InfoOverviewComponent implements OnInit {
+export class InfoOverviewComponent implements OnInit, OnChanges {
   @Input() public infoList: Info[];
-
+  public filteredInfoList: Info[] = [];
   constructor(public router: Router) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if(changes["infoList"]) {
+      if(this.infoList && this.infoList.length > 0)
+        this.filteredInfoList = this.infoList;
+  }
+  }
+
+  public filterList(event) {
+    const query = event.target.value.toLowerCase();
+    this.filteredInfoList = this.infoList.filter(item => item.title.toLowerCase().includes(query));
+  }
 }
