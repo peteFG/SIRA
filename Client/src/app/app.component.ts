@@ -15,10 +15,6 @@ export class AppComponent {
     { title: 'Erste Hilfe', url: '/aid', icon: 'add-circle' },
     { title: 'Statistiken', url: '/stats', icon: 'stats-chart' },
   ];
-  constructor(private sampleService: SampleService) {
-    sampleService.getSamples();
-    this.sampleService.sampleList.subscribe((list) =>
-      console.log('#### ', list)
-    );
+  constructor() {
   }
 }

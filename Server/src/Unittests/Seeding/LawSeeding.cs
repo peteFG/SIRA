@@ -134,7 +134,7 @@ public class LawSeeding : BaseUnitTests
 
         law.Category = Category.Law;
         law.Section = "33. StVO-Novelle";
-        law.Title = "Durchfahrt von Kfz in Fahrradstraßen kann ermöglicht werden";
+        law.Title = "Durchfahrt von Kfz in Fahrradstraßen";
         law.Text =
             "Um die Einführung von Fahrradstraßen zu erleichtern, kann die Behörde „bestimmen, dass die Fahrradstraße dauernd oder zu bestimmten Zeiten oder zu Zwecken der Durchfahrt“ mit Kfz befahren werden darf. Darin lag bisher oft ein amtlicher Hinderungsgrund zur Einrichtung von Fahrradstraßen." +
             "Hier orientiert sich die StVO-Novelle an der deutschen Rechtslage. Eine Regelung, die die vermehrte Umsetzung von Fahrradstraßen erhoffen lässt. Wir weisen bei jedem Anlass darauf hin, dass dadurch Verkehrsfilter zur Kfz-Beruhigung in Fahrradstraßen umso wichtiger werden.";
@@ -149,7 +149,7 @@ public class LawSeeding : BaseUnitTests
 
         law.Category = Category.Law;
         law.Section = "33. StVO-Novelle";
-        law.Title = "Reißverschlussprinzip statt Sondernachrang bei parallel einmündenden Radwegen";
+        law.Title = "Reißverschlussprinzip statt Sondernachrang";
         law.Text =
             "Nach der Einführung des Reißverschlussprinzips für Radfahrstreifen analog zu normalen Fahrstreifen im Zuge der letzten Novelle: Dies gilt zukünftig innerorts auch für parallel einmündende Radfahrende, die einen Radweg verlassen.";
         Info returnval = await MongoUoW.Infos.InsertOneAsync(law);
@@ -163,7 +163,7 @@ public class LawSeeding : BaseUnitTests
 
         law.Category = Category.Law;
         law.Section = "33. StVO-Novelle";
-        law.Title = "Eindämmung überzogener Strafen bei Ausstattungsmängeln";
+        law.Title = "Eindämmung überzogener Strafen";
         law.Text =
             "Das Mehrfachstrafen durch Aufsummieren einzelner fehlender Reflektoren wird behoben. Zukünftig ist sind auch mehrere Ausstattungsmängel aus dem § 1 Abs. 1 der Fahrradverordnung als eine Verwaltungsübertretung gewertet.";
 
@@ -178,7 +178,7 @@ public class LawSeeding : BaseUnitTests
 
         law.Category = Category.Law;
         law.Section = "33. StVO-Novelle";
-        law.Title = "Das Hineinragen in Radwege wird verboten, in Gehwege deutlich eingeschränkt";
+        law.Title = "Hineinragen in Radwege";
         law.Text =
             "Das Verparken von Radinfrastruktur ist insbesondere in Städten ein großes Problem. Bisher ist  das Überragen von Bodenmarkierungen nach § 9 Abs. 7 untersagt, ein ähnliches Verbot gilt zukünftig für das Hineinragen von Kfz in Radwege und Gehwege (bei Gehwegen ausg. geringfügiges Überragen durch Seitenspiegel oder Stoßstange)." +
             "Für Ladetätigkeiten für bis zu 10 Minuten dürfen Gehsteige bis auf 1,5 m verengt werden. Bei Einbauten & Gegenständen sind zukünftig dauerhaft 1,5 m frei zu halten, mit temporären Ausnahmen bei Bauarbeiten o.ä.";

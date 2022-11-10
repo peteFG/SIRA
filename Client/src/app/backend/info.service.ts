@@ -17,6 +17,12 @@ export class InfoService {
   constructor(private backendService: BackendService) {}
 
   public getInfoLawList() {
+    this.backendService
+      .info('ListInfos')
+      .then((res) => this.infoLawList.next(res as Info[]));
+  }
+
+  public getSampleInfoLawList() {
     const infoList: Info[] = [];
     for (let i = 0; i < 10; i++) {
       infoList.push({

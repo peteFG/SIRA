@@ -1,5 +1,8 @@
-<div  class="full-size-container info-outer-container">
+<div class="full-size-container info-outer-container">
     <div *ngFor="let info of infoList" class="info-item-container">
-        {{info.title}}
+        <div class="info-item-inner-container">
+            <ion-icon name="document-text" class="info-menu-icon"></ion-icon>
+            {{info.title}}
+        </div>
     </div>
 </div>
