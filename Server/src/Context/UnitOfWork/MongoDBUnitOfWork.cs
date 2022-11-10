@@ -23,5 +23,6 @@ namespace Context.UnitOfWork
         public IInfoRepository Infos => new InfoRepository(Context);
         public ISubmittedDataRepository SubmittedDataPoints => new SubmittedDataRepository(Context);
         public ISensorDataRepository SensorDataPoints => new SensorDataRepository(Context);
+        public IDangerZoneRepository DangerZones => new DangerZoneRepository(Context);
     }
 }

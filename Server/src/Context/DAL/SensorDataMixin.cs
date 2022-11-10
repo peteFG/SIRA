@@ -6,29 +6,32 @@ namespace Context.DAL;
 public class SensorDataMixin
 {
     [Name("Latitude")] 
-    public string XCoord { get; set; }
+    public string? XCoord { get; set; }
 
     [Name("Longitude")] 
-    public string YCoord { get; set; }
+    public string? YCoord { get; set; }
 
     [Name("Date")] 
-    public string Date { get; set; }
+    public string? Date { get; set; }
 
     [Name("Time")] 
-    public string Timestamp { get; set; }
-
+    public string? Timestamp { get; set; }
+    
+    [Name("Marked")]
+    public string? Marked { get; set; }
+    
     [Name("Altitude")] 
-    public float? Altitude { get; set; }
+    public string? Altitude { get; set; }
 
     [Name("Speed")] 
-    public float? Speed { get; set; }
+    public string? Speed { get; set; }
 
     [Name("Left")] 
-    public int? DistanceLeft { get; set; }
+    public string? DistanceLeft { get; set; }
 
     [Name("Right")] 
-    public int? DistanceRight { get; set; }
+    public string? DistanceRight { get; set; }
 
     [Name("Measurements")] 
-    public int Measurements { get; set; }
+    public string? Measurements { get; set; }
 }
