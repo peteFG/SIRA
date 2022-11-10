@@ -7,6 +7,7 @@ import { AppFooterComponent } from './app-footer/app-footer.component';
 import { MapComponent } from './map/map.component';
 import { InfoOverviewComponent } from './info/info-overview/info-overview.component';
 import { InfoComponent } from './info/info.component';
+import { InfoDetailComponent } from './info/info-detail/info-detail.component';
 
 const components = [
   AppHeaderComponent,
@@ -14,6 +15,7 @@ const components = [
   MapComponent,
   InfoOverviewComponent,
   InfoComponent,
+  InfoDetailComponent,
 ];
 
 @NgModule({

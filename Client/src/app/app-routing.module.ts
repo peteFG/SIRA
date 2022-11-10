@@ -4,6 +4,7 @@ import { AidPage } from './pages/aid/aid.page';
 import { LawPage } from './pages/law/law.page';
 import { RoutePage } from './pages/route/route.page';
 import { StatsPage } from './pages/stats/stats.page';
+import { InfoDetailPage } from './pages/subpages/info-detail/info-detail.page';
 
 const routes: Routes = [
   {
@@ -18,6 +19,15 @@ const routes: Routes = [
   {
     path: 'law',
     component: LawPage,
+    loadChildren: () => import('./pages/pages.module').then( m => m.PagesModule)
+  },
+  {
+    path: 'law/detail',
+    component: InfoDetailPage,
+    loadChildren: () => import('./pages/pages.module').then( m => m.PagesModule)
+  },{
+    path: 'aid/detail',
+    component: InfoDetailPage,
     loadChildren: () => import('./pages/pages.module').then( m => m.PagesModule)
   },
   {

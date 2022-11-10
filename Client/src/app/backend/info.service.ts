@@ -18,7 +18,14 @@ export class InfoService {
   private infoFirstAidList = new BehaviorSubject<Info[]>([]);
   public infoFirstAidList$ = this.infoFirstAidList.asObservable();
 
+  private currentInfo = new BehaviorSubject<Info>(null);
+  public currentInfo$ = this.currentInfo.asObservable();
+
   constructor(private backendService: BackendService) {}
+
+  public setCurrentInfo(info:Info) {
+    this.currentInfo.next(info);
+  }
 
   public getInfoLawList() {
     this.backendService

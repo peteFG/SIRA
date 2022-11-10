@@ -9,6 +9,8 @@ import { Info } from 'src/app/backend/info.service';
 })
 export class InfoComponent implements OnInit {
   @Input() public infoList: Info[];
+  public showDetail: boolean = false;
+  public clickedDetailId: string;
   constructor(public router: Router) {}
 
   ngOnInit() {}

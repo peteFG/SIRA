@@ -10,12 +10,13 @@
         <ion-icon *ngIf="router.url !== '/stats'" name="pie-chart-outline" class="footer-menu-icon"></ion-icon>
       </div>
       <div (click)="onItemClicked('law')">
-        <ion-icon *ngIf="router.url === '/law'" name="document-text" class="footer-menu-icon"></ion-icon>
-        <ion-icon *ngIf="router.url !== '/law'" name="document-text-outline" class="footer-menu-icon"></ion-icon>
+        <ion-icon *ngIf="router.url.startsWith('/law')" name="document-text" class="footer-menu-icon"></ion-icon>
+        <ion-icon *ngIf="!router.url.startsWith('/law')" name="document-text-outline" class="footer-menu-icon">
+        </ion-icon>
       </div>
       <div (click)="onItemClicked('aid')">
-        <ion-icon *ngIf="router.url === '/aid'" name="bag-add" class="footer-menu-icon"></ion-icon>
-        <ion-icon *ngIf="router.url !== '/aid'" name="bag-add-outline" class="footer-menu-icon"></ion-icon>
+        <ion-icon *ngIf="router.url.startsWith('/aid')" name="bag-add" class="footer-menu-icon"></ion-icon>
+        <ion-icon *ngIf="!router.url.startsWith('/aid')" name="bag-add-outline" class="footer-menu-icon"></ion-icon>
       </div>
     </div>
   </ion-toolbar>

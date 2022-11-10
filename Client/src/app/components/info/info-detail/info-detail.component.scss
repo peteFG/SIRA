@@ -1,0 +1,18 @@
+.info-outer-container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 1.5em;
+    overflow: auto;
+    align-content: flex-start;
+}
+
+.info-text-container {
+    padding: .5em;
+    white-space: pre-line;
+}
+
+
+ion-searchbar {
+    height: 60px;
+    --border-radius: 10px;
+}
