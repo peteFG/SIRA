@@ -5,8 +5,16 @@ import { FormsModule } from '@angular/forms';
 import { AppHeaderComponent } from './app-header/app-header.component';
 import { AppFooterComponent } from './app-footer/app-footer.component';
 import { MapComponent } from './map/map.component';
+import { InfoOverviewComponent } from './info/info-overview/info-overview.component';
+import { InfoComponent } from './info/info.component';
 
-const components = [AppHeaderComponent, AppFooterComponent, MapComponent];
+const components = [
+  AppHeaderComponent,
+  AppFooterComponent,
+  MapComponent,
+  InfoOverviewComponent,
+  InfoComponent,
+];
 
 @NgModule({
   imports: [CommonModule, FormsModule, IonicModule],
