@@ -17,8 +17,8 @@ public class SensorDataMixin
     [Name("Time")] 
     public string? Timestamp { get; set; }
     
-    [Name("Marked")]
-    public string? Marked { get; set; }
+    [Name("Confirmed")]
+    public string? ButtonPressed { get; set; }
     
     [Name("Altitude")] 
     public string? Altitude { get; set; }

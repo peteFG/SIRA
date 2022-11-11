@@ -39,13 +39,13 @@ namespace API.Controllers
         }
 
         /// <summary>
-        /// Reads the OBS CSV into the local database.
-        /// If datapoint is empty a 404 is raised.
+        /// Reads an OBS CSV file into the local database.
+        /// If file is empty or faulty a 400 is raised.
         /// </summary>
+        /// <param name="file"></param>
         [HttpPost("ParseSensorData")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult> ParseSensorData(IFormFile file)
         {
             if (file == null || file.Length == 0 || file.FileName.IsNullOrEmpty())
@@ -61,44 +61,52 @@ namespace API.Controllers
             var dataPoints = new List<SensorData>();
             var config = new CsvConfiguration(CultureInfo.InvariantCulture)
             {
-                HasHeaderRecord = false,
+                ShouldSkipRecord = x => x.Row[0].StartsWith("OBSDataFormat"),
+                HasHeaderRecord = true,
                 Delimiter = ";",
                 MissingFieldFound = null
             };
             var fileName = Path.GetFileName(file.FileName);
-            fileName = fileName[..(fileName.LastIndexOf("o", StringComparison.Ordinal) - 1)];
-            //TODO: maybe better filename?
-            var rideId = fileName + "\\" + ObjectId.GenerateNewId().ToString();
-            using (var reader = new StreamReader(file.OpenReadStream()))
-            using (var csv = new CsvReader(reader, config))
+            if (fileName.Contains('-'))
             {
-                var records = csv.GetRecords<SensorDataMixin>().ToList();
-                dataPoints.AddRange(records.Select(record => new SensorData
-                {
-                    RideId = rideId,
-                    Date = record.Date,
-                    DistanceLeft = record.DistanceLeft, //.IsNullOrEmpty() ? 0 : int.Parse(record.DistanceLeft),
-                    DistanceRight = record.DistanceRight, //.IsNullOrEmpty() ? 0 : int.Parse(record.DistanceRight),
-                    Measurements = record.Measurements, //.IsNullOrEmpty() ? 0 : int.Parse(record.Measurements),
-                    Speed = record.Speed, //.IsNullOrEmpty() ? 0f : float.Parse(record.Speed),
-                    Altitude = record.Altitude, //.IsNullOrEmpty() ? 0f : float.Parse(record.Altitude),
-                    Timestamp = record.Timestamp,
-                    Marked = record.Marked,
-                    XCoord = record.XCoord,
-                    YCoord = record.YCoord
-                }));
+                fileName = fileName[..fileName.LastIndexOf("-", StringComparison.Ordinal)];
             }
 
+            var rideId = ObjectId.GenerateNewId().ToString();
+            if (fileName.Length >= 18) rideId = fileName + "_" + rideId;
             try
             {
+                using (var reader = new StreamReader(file.OpenReadStream()))
+                using (var csv = new CsvReader(reader, config))
+                {
+                    var records = csv.GetRecords<SensorDataMixin>().ToList();
+                    if (records.IsNullOrEmpty()) throw new Exception("records are empty");
+                    var uploadTimeStamp = DateTime.Now;
+                    dataPoints.AddRange(records.Select(record => new SensorData
+                    {
+                        UploadTimeStamp = uploadTimeStamp,
+                        RideId = rideId,
+                        Date = record.Date,
+                        DistanceLeft = record.DistanceLeft, //.IsNullOrEmpty() ? 0 : int.Parse(record.DistanceLeft),
+                        DistanceRight = record.DistanceRight, //.IsNullOrEmpty() ? 0 : int.Parse(record.DistanceRight),
+                        Measurements = record.Measurements, //.IsNullOrEmpty() ? 0 : int.Parse(record.Measurements),
+                        Speed = record.Speed, //.IsNullOrEmpty() ? 0f : float.Parse(record.Speed),
+                        Altitude = record.Altitude, //.IsNullOrEmpty() ? 0f : float.Parse(record.Altitude),
+                        Timestamp = record.Timestamp,
+                        ButtonPressed = record.ButtonPressed,
+                        XCoord = record.XCoord,
+                        YCoord = record.YCoord
+                    }));
+                }
+
                 await mongo.SensorDataPoints.InsertManyAsync(dataPoints);
             }
             catch (Exception e)
             {
-                return BadRequest("Can not upload entries, file seems to be faulty.\n Error Message:\n" + e);
+                return BadRequest("Can not upload entries, file seems to be faulty.\nError Message:\n" + e);
             }
 
-            return Ok();
+            return Ok(dataPoints.Count + " entries have been added to the database.");
         }
 
 
