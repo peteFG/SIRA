@@ -13,10 +13,7 @@ namespace Context.Settings
         public IMongoDatabase DataBase { get; set; }
         public GridFSBucket bucket { get; set; }
 
-        public Boolean IsConnected
-        {
-            get { return DataBase != null; }
-        }
+        public Boolean IsConnected => DataBase != null;
 
         public MongoDBContext(MongoDBSettings settings)
         {

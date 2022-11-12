@@ -30,9 +30,4 @@
     <ProjectReference Include="..\Context\Context.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="RequestModels" />
-    <Folder Include="ResponseModels" />
-  </ItemGroup>
-
 </Project>
