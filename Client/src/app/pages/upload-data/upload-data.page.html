@@ -1,0 +1,13 @@
+<app-header></app-header>
+<ion-content [fullscreen]="true">
+  <div class="full-size-color-container">
+    <div class="upload-data-container">
+      <input type="file" class="file-upload" (change)="onFileUploaded($event)">
+      <app-button *ngIf="fileList && fileList.length > 0" [text]="'Datei hochladen'" (onClick)="onUploadFile()">
+      </app-button>
+      <span *ngIf="uploadState" style="margin-top: 2em; padding: 1em; text-align: center;">
+        {{uploadState}}</span>
+    </div>
+  </div>
+</ion-content>
+<app-footer></app-footer>

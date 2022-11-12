@@ -1,0 +1,11 @@
+<div class="full-size-container info-outer-container">
+    <ion-searchbar (ionChange)="filterList($event)" placeholder="Suche ..."></ion-searchbar>
+    <div class="info-overview-item-outer-container">
+        <div *ngFor="let info of filteredInfoList" class="info-item-container" (click)="onItemClicked(info)">
+            <info-overview-item *ngIf="info?.action !== 'EmergencyCall'" [info]="info"></info-overview-item>
+            <a *ngIf="info?.action === 'EmergencyCall'" class="info-item-call" href="tel:112">
+                <info-overview-item [info]="info"></info-overview-item>
+            </a>
+        </div>
+    </div>
+</div>

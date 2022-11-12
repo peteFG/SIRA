@@ -13,12 +13,24 @@ public class Info : MongoDocument
     [JsonConverter(typeof(StringEnumConverter))]
     public Category Category { get; set; }
 
+    [BsonRepresentation(BsonType.String)]
+    [JsonConverter(typeof(StringEnumConverter))]
+    public Action? Action { get; set; } = null;
+
     public string? Section { get; set; }
     public string Text { get; set; }
+
+    public string Icon { get; set; } = "document-text";
 }
 
 public enum Category
 {
     Law,
     FirstAid
+}
+
+public enum Action
+{
+    EmergencyCall,
+    AccidentReport
 }

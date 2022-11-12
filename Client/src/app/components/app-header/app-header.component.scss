@@ -18,5 +18,19 @@ ion-menu-button {
 
 .header-logo-container {
     height: 45px;
-    width: 90px;
+    width: 140px;
+    padding-left: 2em;
+}
+
+.header-items-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.info-icon {
+    padding-right: 0.7em;
+    color: white;
+    height: 30px;
+    width: 30px;
 }

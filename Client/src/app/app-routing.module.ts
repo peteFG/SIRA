@@ -3,7 +3,10 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AidPage } from './pages/aid/aid.page';
 import { LawPage } from './pages/law/law.page';
 import { RoutePage } from './pages/route/route.page';
+import { SiraInfoPage } from './pages/sira-info/sira-info.page';
 import { StatsPage } from './pages/stats/stats.page';
+import { InfoDetailPage } from './pages/subpages/info-detail/info-detail.page';
+import { UploadDataPage } from './pages/upload-data/upload-data.page';
 
 const routes: Routes = [
   {
@@ -21,6 +24,15 @@ const routes: Routes = [
     loadChildren: () => import('./pages/pages.module').then( m => m.PagesModule)
   },
   {
+    path: 'law/detail',
+    component: InfoDetailPage,
+    loadChildren: () => import('./pages/pages.module').then( m => m.PagesModule)
+  },{
+    path: 'aid/detail',
+    component: InfoDetailPage,
+    loadChildren: () => import('./pages/pages.module').then( m => m.PagesModule)
+  },
+  {
     path: 'aid',
     component: AidPage,
     loadChildren: () => import('./pages/pages.module').then( m => m.PagesModule)
@@ -33,6 +45,16 @@ const routes: Routes = [
   {
     path: 'stats',
     component: StatsPage,
+    loadChildren: () => import('./pages/pages.module').then( m => m.PagesModule)
+  },
+  {
+    path: 'info',
+    component: SiraInfoPage,
+    loadChildren: () => import('./pages/pages.module').then( m => m.PagesModule)
+  },
+  {
+    path: 'upload-data',
+    component: UploadDataPage,
     loadChildren: () => import('./pages/pages.module').then( m => m.PagesModule)
   }
 ];
