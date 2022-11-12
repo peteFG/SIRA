@@ -11,6 +11,7 @@ import { RoutePage } from './route/route.page';
 import { AidPage } from './aid/aid.page';
 import { StatsPage } from './stats/stats.page';
 import { InfoDetailPage } from './subpages/info-detail/info-detail.page';
+import { SiraInfoPage } from './sira-info/sira-info.page';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { InfoDetailPage } from './subpages/info-detail/info-detail.page';
     HomePageRoutingModule,
     ComponentsModule
   ],
-  declarations: [HomePage, LawPage, RoutePage, AidPage, LawPage, StatsPage, InfoDetailPage]
+  declarations: [HomePage, LawPage, RoutePage, AidPage, LawPage, StatsPage, InfoDetailPage,
+  SiraInfoPage]
 })
 export class PagesModule {}

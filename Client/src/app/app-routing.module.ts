@@ -3,6 +3,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AidPage } from './pages/aid/aid.page';
 import { LawPage } from './pages/law/law.page';
 import { RoutePage } from './pages/route/route.page';
+import { SiraInfoPage } from './pages/sira-info/sira-info.page';
 import { StatsPage } from './pages/stats/stats.page';
 import { InfoDetailPage } from './pages/subpages/info-detail/info-detail.page';
 
@@ -43,6 +44,11 @@ const routes: Routes = [
   {
     path: 'stats',
     component: StatsPage,
+    loadChildren: () => import('./pages/pages.module').then( m => m.PagesModule)
+  },
+  {
+    path: 'info',
+    component: SiraInfoPage,
     loadChildren: () => import('./pages/pages.module').then( m => m.PagesModule)
   }
 ];

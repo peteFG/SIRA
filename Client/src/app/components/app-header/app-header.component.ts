@@ -14,8 +14,7 @@ export class AppHeaderComponent implements OnInit {
   ngOnInit() {
   }
 
-  public onLogoClicked() {
-    this.router.navigate(['/home']);
+  public onNavigateToPage(page: string) {
+    this.router.navigate(['/'+page]);
   }
-
 }
