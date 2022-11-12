@@ -1,0 +1,5 @@
+<div class="info-item-inner-container">
+    <ion-icon *ngIf="!info.icon" name="document-text" class="info-menu-icon"></ion-icon>
+    <ion-icon *ngIf="info.icon" [name]="info.icon" class="info-menu-icon"></ion-icon>
+    <span class="info-overview-item-text menu-item-text">{{info.title}}</span>
+</div>

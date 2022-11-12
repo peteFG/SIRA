@@ -3,6 +3,8 @@
 
 /** Ionic CSS Variables **/
 :root {
+  --ion-font-family: 'Raleway';
+
   /** primary **/
   --ion-color-primary: #3880ff;
   --ion-color-primary-rgb: 56, 128, 255;
@@ -91,4 +93,10 @@
   height: 100%;
   width: 100%;
   background-color: #EAEFE1;
+}
+
+.menu-item-text {
+  font-size: 20px;
+  font-style: italic;
+  font-weight: 700;
 }

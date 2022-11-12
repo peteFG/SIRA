@@ -28,6 +28,8 @@ export class InfoOverviewComponent implements OnInit, OnChanges {
   }
 
   public onItemClicked(info: Info) {
+    if(info.action == "EmergencyCall")
+      return;
     this.infoService.setCurrentInfo(info);
     this.router.navigate([this.router.url+"/detail"]);
     

@@ -2,17 +2,33 @@
     display: flex;
     flex-wrap: wrap;
     padding: 1.5em;
-    overflow: auto;
     align-content: flex-start;
 }
 
 .info-text-container {
-    padding: .5em;
+    padding: .8em;
     white-space: pre-line;
+    overflow: auto;
+    max-height: calc(100% - 60px);
+    width: 100%;
 }
 
+.info-text-container-report {
+    display: flex;
+    flex-direction: column;
+}
 
 ion-searchbar {
     height: 60px;
     --border-radius: 10px;
+}
+
+::ng-deep .highlighted-text {
+    background-color: yellow;
+}
+
+.accident-report-button {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }

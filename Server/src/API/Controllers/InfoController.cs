@@ -38,6 +38,46 @@ namespace API.Controllers
         /// Gets all existing Infos.
         /// If no Infos are found a 404 is raised.
         /// </summary>
+        [HttpGet("ListLawInfos")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Info))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<List<Info>>> ListLawInfos()
+        {
+            List<Info> Info = mongo.Infos.FilterBy(x => x.Category == Category.Law).ToList();
+
+            if (Info != null)
+            {
+                return Info;
+            }
+
+            return NotFound();
+        }
+
+
+        /// <summary>
+        /// Gets all existing Infos.
+        /// If no Infos are found a 404 is raised.
+        /// </summary>
+        [HttpGet("ListFirstAidInfos")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Info))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<List<Info>>> ListFirstAidInfos()
+        {
+            List<Info> Info = mongo.Infos.FilterBy(x => x.Category == Category.FirstAid).ToList();
+
+            if (Info != null)
+            {
+                return Info;
+            }
+
+            return NotFound();
+        }
+
+
+        /// <summary>
+        /// Gets all existing Infos.
+        /// If no Infos are found a 404 is raised.
+        /// </summary>
         [HttpGet("ListInfos")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Info))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

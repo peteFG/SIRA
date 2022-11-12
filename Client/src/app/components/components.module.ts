@@ -8,6 +8,9 @@ import { MapComponent } from './map/map.component';
 import { InfoOverviewComponent } from './info/info-overview/info-overview.component';
 import { InfoComponent } from './info/info.component';
 import { InfoDetailComponent } from './info/info-detail/info-detail.component';
+import { HighlighterPipe } from '../pipes/highlighter.pipe';
+import { InfoOverviewItemComponent } from './info/info-overview/info-overview-item/info-overview-item.component';
+import { AppButtonControl } from './controls/app-button/app-button.control';
 
 const components = [
   AppHeaderComponent,
@@ -16,6 +19,9 @@ const components = [
   InfoOverviewComponent,
   InfoComponent,
   InfoDetailComponent,
+  HighlighterPipe,
+  InfoOverviewItemComponent,
+  AppButtonControl,
 ];
 
 @NgModule({

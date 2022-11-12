@@ -8,6 +8,7 @@ export interface Info {
   section?: string;
   text: string;
   icon?: string;
+  action?: string;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -29,29 +30,13 @@ export class InfoService {
 
   public getInfoLawList() {
     this.backendService
-      .info('ListInfos')
+      .info('ListLawInfos')
       .then((res) => this.infoLawList.next((res as Info[])));
   }
 
   public getInfoFirstAidList() {
-    const infoList: Info[] = [];
-    for (let i = 0; i < 10; i++) {
-      infoList.push({
-        title: 'Info ' + i,
-        icon: "bag-add",
-        text:
-          'Lorem ipsum dolor sit amet, consetetur ' +
-          'sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut ' +
-          'labore et dolore magna aliquyam erat, sed diam voluptua. ' +
-          'At vero eos et accusam et justo duo dolores et ea rebum. ' +
-          'Stet clita kasd gubergren, no sea takimata sanctus est Lorem ' +
-          'ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur ' +
-          'sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore ' +
-          'et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam ' +
-          'et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea ' +
-          'takimata sanctus est Lorem ipsum dolor sit amet. ',
-      });
-    }
-    this.infoFirstAidList.next(infoList);
+    this.backendService
+      .info('ListFirstAidInfos')
+      .then((res) => this.infoFirstAidList.next((res as Info[])));
   }
 }
