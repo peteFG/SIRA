@@ -6,6 +6,7 @@ import { RoutePage } from './pages/route/route.page';
 import { SiraInfoPage } from './pages/sira-info/sira-info.page';
 import { StatsPage } from './pages/stats/stats.page';
 import { InfoDetailPage } from './pages/subpages/info-detail/info-detail.page';
+import { UploadDataPage } from './pages/upload-data/upload-data.page';
 
 const routes: Routes = [
   {
@@ -49,6 +50,11 @@ const routes: Routes = [
   {
     path: 'info',
     component: SiraInfoPage,
+    loadChildren: () => import('./pages/pages.module').then( m => m.PagesModule)
+  },
+  {
+    path: 'upload-data',
+    component: UploadDataPage,
     loadChildren: () => import('./pages/pages.module').then( m => m.PagesModule)
   }
 ];
