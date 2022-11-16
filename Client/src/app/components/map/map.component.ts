@@ -4,6 +4,7 @@ import { Map } from 'ol';
 import { OSM, Vector as VectorSource } from 'ol/source.js';
 import View from 'ol/View.js';
 import TileLayer from 'ol/layer/Tile.js';
+import { transform } from 'ol/proj.js';
 
 @Component({
   selector: 'sira-map',
@@ -17,6 +18,10 @@ export class MapComponent implements OnInit {
   // Routing = https://www.liedman.net/leaflet-routing-machine/
 
   ngOnInit() {
+    const view = new View({
+      center: [0, 0],
+      zoom: 13,
+    });
     this.map = new Map({
       layers: [
         new TileLayer({
@@ -24,13 +29,11 @@ export class MapComponent implements OnInit {
         }),
       ],
       target: document.getElementById('map'),
-      view: new View({
-        center: [0, 0],
-        zoom: 3,
-      }),
+      view,
     });
-    setTimeout(() => {
-      this.map.updateSize();
-    }, 500);
+    this.map
+      .getView()
+      .setCenter(transform([15.439504, 47.070714], 'EPSG:4326', 'EPSG:3857'));
+    setTimeout(() => this.map.updateSize(), 500);
   }
 }

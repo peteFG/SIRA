@@ -11,6 +11,7 @@
     overflow: auto;
     max-height: calc(100% - 60px);
     width: 100%;
+    text-align: justify;
 }
 
 .info-text-container-report {
@@ -31,4 +32,8 @@ ion-searchbar {
     width: 100%;
     display: flex;
     justify-content: center;
+}
+.info-text-title-container {
+    font-weight: 700;
+    padding: .8em;
 }

@@ -1,5 +1,6 @@
 <div class="full-size-container info-outer-container">
     <ion-searchbar (ionChange)="onFilterText($event)" placeholder="Suche ..."></ion-searchbar>
+    <div class="info-text-title-container">{{filteredInfo?.title}}</div>
     <div class="info-text-container" [class.info-text-container-report]="filteredInfo?.action === 'AccidentReport'"
         [innerHtml]="filteredInfo?.text | highlighter:filterText:'partial'">
     </div>
