@@ -14,16 +14,24 @@ import { InfoDetailPage } from './subpages/info-detail/info-detail.page';
 import { SiraInfoPage } from './sira-info/sira-info.page';
 import { UploadDataPage } from './upload-data/upload-data.page';
 
-
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
     HomePageRoutingModule,
-    ComponentsModule
+    ComponentsModule,
   ],
-  declarations: [HomePage, LawPage, RoutePage, AidPage, LawPage, StatsPage, InfoDetailPage,
-  SiraInfoPage, UploadDataPage]
+  declarations: [
+    HomePage,
+    LawPage,
+    RoutePage,
+    AidPage,
+    LawPage,
+    StatsPage,
+    InfoDetailPage,
+    SiraInfoPage,
+    UploadDataPage,
+  ],
 })
 export class PagesModule {}
