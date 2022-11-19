@@ -11,9 +11,9 @@ public class DangerZoneSeeding : BaseUnitTests
     {
         DangerZone zone = new DangerZone();
 
-        zone.XCoord = "47.1159973";
-        zone.YCoord = "15.4301136";
-        zone.ToolTipText = "Popelkaring 54";
+        zone.XCoord = "47.0715349";
+        zone.YCoord = "15.4366008";
+        zone.ToolTipText = "Badgasse 4";
 
         DangerZone returnval = await MongoUoW.DangerZones.InsertOneAsync(zone);
 
