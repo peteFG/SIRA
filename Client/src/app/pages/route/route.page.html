@@ -2,7 +2,17 @@
 
 <ion-content [fullscreen]="true">
   <div class="full-size-color-container">
-    <sira-map></sira-map>
+    <div class="map-outer-container">
+        <div class="ion-input-outer-container">
+            <div>
+                <ion-input class="ion-input-field" placeholder="Start" [(ngModel)]="coordValues[0].name"></ion-input>
+            </div>
+            <div>
+                <ion-input class="ion-input-field" placeholder="Ziel"  [(ngModel)]="coordValues[1].name"></ion-input>
+            </div>
+        </div>
+        <sira-map [start]="coordValues[0]" [end]="coordValues[1]"></sira-map>
+    </div>
   </div>
 </ion-content>
 <app-footer></app-footer>

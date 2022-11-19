@@ -28,6 +28,26 @@ ion-menu-button {
 }
 
 sira-map {
-    height: 400px;
+    height: 100%;
     width: 100%;
+}
+
+.map-outer-container {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+}
+
+.ion-input-field {
+    background-color: white;
+    border: 2px #537953 solid;
+    border-radius: 10px;
+}
+
+.ion-input-field:first-child {
+    margin-bottom: .3em;
+}
+
+.ion-input-outer-container {
+    margin: .6em;
 }

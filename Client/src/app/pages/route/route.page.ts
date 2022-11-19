@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import {
+  DangerZone,
+  DangerZonesService,
+} from 'src/app/backend/danger-zones.service';
+import { mapValues } from './route.testdata';
 
 @Component({
   selector: 'route-page',
@@ -7,10 +12,9 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./route.page.scss'],
 })
 export class RoutePage implements OnInit {
+  constructor(private dangerZonesService: DangerZonesService) {}
 
-  constructor() { }
+  public coordValues = mapValues;
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

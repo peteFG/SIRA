@@ -5,7 +5,8 @@
         <div></div>
         <img class="header-logo-container" (click)="onNavigateToPage('home')" alt="SIRA Logo"
           src="../../../assets/icon/logo_white.svg" />
-        <ion-icon (click)="onNavigateToPage('info')" name="information-circle" class="info-icon"></ion-icon>
+        <ion-icon *ngIf="router.url === '/info'" (click)="onNavigateToPage('info')" name="information-circle" class="info-icon"></ion-icon>
+        <ion-icon *ngIf="router.url !== '/info'" (click)="onNavigateToPage('info')" name="information-circle-outline" class="info-icon"></ion-icon>
       </div>
     </ion-title>
   </ion-toolbar>

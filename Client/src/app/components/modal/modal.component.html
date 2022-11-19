@@ -1,0 +1,10 @@
+<ion-modal id="example-modal" #modal [trigger]="trigger" (didDismiss)="onDismissClicked(modal)">
+  <ng-template>
+    <div class="wrapper">
+      <div class="close-container" (click)="onDismissClicked(modal)">
+        <span class="close-inner-container">X</span>
+      </div>
+      <ng-content select="[custom-content]"></ng-content>
+    </div>
+  </ng-template>
+</ion-modal>

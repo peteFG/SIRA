@@ -1,0 +1,45 @@
+<app-header></app-header>
+
+<ion-content [fullscreen]="true">
+  <div class="full-size-color-container">
+    <div class="route-data-outer-container">
+      <div class="route-data-top-container">
+        <span class="route-data-top-text">Fahrt beendet</span>
+        <ion-icon class="play-forward-icon" name="play-forward"></ion-icon>
+      </div>
+      <div style="margin-top: 1em;" class="checkbox-outer-container">
+        <div>
+          <div class="checkbox-item-container">
+            <ion-checkbox class="checkbox-item" [(ngModel)]="isAllChecked" (ngModelChange)="onAllStateChanged()">
+            </ion-checkbox>
+            <ion-label>Alles auswählen</ion-label>
+          </div>
+          <div *ngFor="let item of dataCheckValues" class="checkbox-item-container">
+            <ion-checkbox class="checkbox-item" [(ngModel)]="item.state" (ngModelChange)="onCheckboxStateChanged()">
+            </ion-checkbox>
+            <ion-label>{{item.text}}: {{item.value}}</ion-label>
+          </div>
+        </div>
+        <div class="save-state-checkbox-container">
+          <ion-checkbox class="checkbox-item-save-state" [(ngModel)]="isSaveStateChecked">
+          </ion-checkbox>
+          <ion-label>Meine Auswahl speichern</ion-label>
+        </div>
+        <app-button id="route-data-button" style="margin-top: 2em;" [hasArrowIcon]="true" [text]="buttonText"
+          (onClick)="onSendData()">
+        </app-button>
+      </div>
+    </div>
+  </div>
+  <app-modal [trigger]="'route-data-button'" (onModalClosed)="onModalClosed()">
+    <ng-container custom-content>
+      <div class="modal-route-data-container">
+        <ion-icon class="accessibility-icon" name="accessibility"></ion-icon>
+        <span class="modal-data-text">
+          Wir hoffen, du hattest<br>eine gute Fahrt!<br><br>Bis zum nächsten Mal! :)
+        </span>
+      </div>
+    </ng-container>
+  </app-modal>
+</ion-content>
+<app-footer></app-footer>
