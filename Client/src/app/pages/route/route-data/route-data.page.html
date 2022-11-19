@@ -10,14 +10,18 @@
       <div style="margin-top: 1em;" class="checkbox-outer-container">
         <div>
           <div class="checkbox-item-container">
-            <ion-checkbox class="checkbox-item"></ion-checkbox>
+            <ion-checkbox class="checkbox-item" [(ngModel)]="isAllChecked" (ngModelChange)="onAllStateChanged()">
+            </ion-checkbox>
             <ion-label>Alles auswählen</ion-label>
           </div>
           <div *ngFor="let item of dataCheckValues" class="checkbox-item-container">
-            <ion-checkbox class="checkbox-item"></ion-checkbox>
+            <ion-checkbox class="checkbox-item" [(ngModel)]="item.state" (ngModelChange)="onCheckboxStateChanged()">
+            </ion-checkbox>
             <ion-label>{{item.text}}: {{item.value}}</ion-label>
           </div>
         </div>
+        <app-button style="margin-top: 2em;" [hasArrowIcon]="true" [text]="buttonText" (onClick)="onSendData()">
+        </app-button>
       </div>
     </div>
   </div>
