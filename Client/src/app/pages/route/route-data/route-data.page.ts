@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { dataCheckValues } from './route-data.testdata';
 
 export interface DataCheckState {
@@ -15,11 +16,22 @@ export interface DataCheckState {
 export class RouteDataPage implements OnInit {
   public dataCheckValues = dataCheckValues;
   public isAllChecked: boolean = false;
+  public isSaveStateChecked: boolean = false;
   public buttonText: string = "Ohne Auswahl fortfahren";
-  constructor() {}
+  constructor(private router: Router) {}
 
 
-  ngOnInit() {}
+  ngOnInit() {
+    const item = localStorage.getItem("dataCheckValues");
+    if(item) {
+      this.dataCheckValues = JSON.parse(item);
+      this.setButtonText();
+    }
+  }
+
+  public onModalClosed() {
+    this.router.navigate(['/home']);
+  }
 
   public onAllStateChanged() {
     if(this.isAllChecked)
@@ -37,6 +49,8 @@ export class RouteDataPage implements OnInit {
   }
 
   public onSendData() {
-    
+    if(this.isSaveStateChecked) {
+      localStorage.setItem("dataCheckValues", JSON.stringify(this.dataCheckValues));
+    }
   }
 }

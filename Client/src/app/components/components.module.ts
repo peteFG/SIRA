@@ -11,6 +11,7 @@ import { InfoDetailComponent } from './info/info-detail/info-detail.component';
 import { HighlighterPipe } from '../pipes/highlighter.pipe';
 import { InfoOverviewItemComponent } from './info/info-overview/info-overview-item/info-overview-item.component';
 import { AppButtonControl } from './controls/app-button/app-button.control';
+import { AppModalComponent } from './modal/modal.component';
 
 const components = [
   AppHeaderComponent,
@@ -22,6 +23,7 @@ const components = [
   HighlighterPipe,
   InfoOverviewItemComponent,
   AppButtonControl,
+  AppModalComponent,
 ];
 
 @NgModule({
