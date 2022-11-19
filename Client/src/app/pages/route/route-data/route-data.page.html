@@ -2,7 +2,24 @@
 
 <ion-content [fullscreen]="true">
   <div class="full-size-color-container">
-    TEST
+    <div class="route-data-outer-container">
+      <div class="route-data-top-container">
+        <span class="route-data-top-text">Fahrt beendet</span>
+        <ion-icon class="play-forward-icon" name="play-forward"></ion-icon>
+      </div>
+      <div style="margin-top: 1em;" class="checkbox-outer-container">
+        <div>
+          <div class="checkbox-item-container">
+            <ion-checkbox class="checkbox-item"></ion-checkbox>
+            <ion-label>Alles auswählen</ion-label>
+          </div>
+          <div *ngFor="let item of dataCheckValues" class="checkbox-item-container">
+            <ion-checkbox class="checkbox-item"></ion-checkbox>
+            <ion-label>{{item.text}}: {{item.value}}</ion-label>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </ion-content>
 <app-footer></app-footer>

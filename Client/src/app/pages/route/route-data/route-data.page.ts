@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import {
-  DangerZone,
-  DangerZonesService,
-} from 'src/app/backend/danger-zones.service';
+import { dataCheckValues } from './route-data.testdata';
+
+export interface DataCheckState {
+  state: boolean;
+  text: string;
+  value: string;
+}
 
 @Component({
   selector: 'route-data-page',
@@ -11,6 +13,7 @@ import {
   styleUrls: ['./route-data.page.scss'],
 })
 export class RouteDataPage implements OnInit {
+  public dataCheckValues = dataCheckValues;
   constructor() {}
 
 
