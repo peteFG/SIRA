@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AidPage } from './pages/aid/aid.page';
 import { LawPage } from './pages/law/law.page';
+import { RouteDataPage } from './pages/route/route-data/route-data.page';
 import { RoutePage } from './pages/route/route.page';
 import { SiraInfoPage } from './pages/sira-info/sira-info.page';
 import { StatsPage } from './pages/stats/stats.page';
@@ -55,6 +56,11 @@ const routes: Routes = [
   {
     path: 'upload-data',
     component: UploadDataPage,
+    loadChildren: () => import('./pages/pages.module').then( m => m.PagesModule)
+  },
+  {
+    path: 'route-data',
+    component: RouteDataPage,
     loadChildren: () => import('./pages/pages.module').then( m => m.PagesModule)
   }
 ];

@@ -1,4 +1,10 @@
 <div id="map" class="map"></div>
+<div class="map-button-container">
+    <ion-icon *ngIf="currentMapState === 0" class="map-button-icon" name="play-circle-outline"
+        (click)="onMapButtonClicked()"></ion-icon>
+    <ion-icon *ngIf="currentMapState === 2" class="map-button-icon" name="stop-circle-outline"
+        (click)="onMapButtonClicked()"></ion-icon>
+</div>
 <div id="popup" class="ol-popup"><a href="#" id="popup-closer" class="ol-popup-closer"></a>
     <div id="popup-content"></div>
 </div>

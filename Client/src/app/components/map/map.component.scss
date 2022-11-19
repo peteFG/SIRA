@@ -50,3 +50,17 @@
 .ol-popup-closer:after {
     content: "✖";
 }
+
+.map-button-container {
+    bottom: 80px;
+    position: absolute;
+    right: 20px;
+    height: 100px;
+    width: 100px;
+}
+
+.map-button-icon {
+    height: 100%;
+    width: 100%;
+    color: #ef2727;
+}

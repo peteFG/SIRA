@@ -6,13 +6,13 @@ export interface RouteMappingData {
 
 export const mapValues: RouteMappingData[] = [
   {
-    name: 'Hauptplatz 1, 8010 Graz',
-    xCoord: '47.070536',
-    yCoord: '15.4385635',
+    name: 'Schlossbergplatz 1, 8010 Graz',
+    xCoord: '47.0729529',
+    yCoord: '15.4350478',
   },
   {
-    name: 'Universitätspl. 3, 8010 Graz',
-    xCoord: '47.0756039',
-    yCoord: '15.4456078',
+    name: 'Kalchberggasse 14, 8010 Graz',
+    xCoord: '47.0678426',
+    yCoord: '15.4356588',
   },
 ];

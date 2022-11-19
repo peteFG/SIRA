@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Map, Overlay } from 'ol';
-import { OSM, Vector as VectorSource } from 'ol/source.js';
+import { Feature, Map, Overlay } from 'ol';
+import { OSM, Vector, Vector as VectorSource } from 'ol/source.js';
 import View from 'ol/View.js';
 import TileLayer from 'ol/layer/Tile.js';
 import { toLonLat } from 'ol/proj.js';
@@ -12,19 +12,31 @@ import {
 import { RouteMappingData } from 'src/app/pages/route/route.testdata';
 import { toStringHDMS } from 'ol/coordinate';
 import {fromLonLat} from 'ol/proj.js';
-import { defaultCircleRadius, getCircleFeatureStyle, getVectorLayer } from './map-helper';
+import { defaultCircleRadius, getCircleFeatureStyle, getMarkerLayer, getVectorLayer } from './map-helper';
+import * as L from 'leaflet';
+import 'leaflet-routing-machine';
+import { Icon, Style } from 'ol/style';
+import VectorLayer from 'ol/layer/Vector';
+import Point from 'ol/geom/Point';
 
+export enum MapState {
+  initial,
+  running,
+  end
+}
 @Component({
   selector: 'sira-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
 })
-export class MapComponent implements OnInit {
+export class MapComponent implements OnInit, AfterViewInit {
   @Input() public start: RouteMappingData;
   @Input() public end: RouteMappingData;
 
   public map: Map;
   public dangerZones: DangerZone[] = [];
+
+  public currentMapState: MapState = MapState.initial;
 
   constructor(
     private router: Router,
@@ -38,13 +50,46 @@ export class MapComponent implements OnInit {
 
   // Routing = https://www.liedman.net/leaflet-routing-machine/
   ngOnInit() {
+    L.Icon.Default.imagePath = "assets/marker/";
    this.initializeMap();
+  }
+
+  public ngAfterViewInit(): void {
+    // const map: L.Map = L.map(document.getElementById('map'));
+    // var router = new L.Routing.OSRM({serviceUrl: 'http://localhost:5000/viaroute'});
+    // L.Routing.control({
+    //   waypoints: [
+    //     L.latLng(47.0729529, 15.4350478),
+    //     L.latLng(47.0678426, 15.4356588)
+    //   ],
+    //   show: false
+    // }).addTo(map);
+  //   L.Routing.control({
+  //     router: L.Routing.osrmv1({
+  //         serviceUrl: `http://router.project-osrm.org/route/v1/`
+  //     }),
+  //     showAlternatives: true,
+  //     fitSelectedRoutes: false,
+  //     show: false,
+  //     routeWhileDragging: true,
+  //     waypoints: [
+  //         L.latLng(47.0729529, 15.4350478),
+  //         L.latLng(47.0678426, 15.4356588)
+  //     ]
+  // }).addTo(map);
+    this.addMarkers();
+  }
+
+
+  private addMarkers() {
+    this.map.addLayer(getMarkerLayer([+this.start.yCoord, +this.start.xCoord]));
+    this.map.addLayer(getMarkerLayer([+this.end.yCoord, +this.end.xCoord], "map-marker-check.png"));
   }
 
   private initializeMap() {
     const view = new View({
-      center: fromLonLat([15.439504, 47.070714]),
-      zoom: 15,
+      center: fromLonLat([15.4374655, 47.0709409]),
+      zoom: 16,
     });
     this.map = new Map({
       layers: [
@@ -56,15 +101,22 @@ export class MapComponent implements OnInit {
       view,
     });
     this.renderMap();
+    if(this.dangerZones && this.dangerZones.length > 0 && this.map)
+      this.renderMapWithDangerZones();
   }
     
   public dangerZonesChanged(zones: DangerZone[]): void {
     this.dangerZones = zones;
-    for(const zone of zones) {
+    if(this.dangerZones && this.dangerZones.length > 0 && this.map)
+      this.renderMapWithDangerZones();
+  }
+
+  private renderMapWithDangerZones() {
+    for(const zone of this.dangerZones) {
       const circleFeature = getCircleFeatureStyle([+zone.yCoord,+zone.xCoord]);
       this.map.addLayer(getVectorLayer(circleFeature));
     }
-    if(zones.length > 0) {
+    if(this.dangerZones.length > 0) {
       const container = document.getElementById('popup');
       const closer = document.getElementById('popup-closer');
       closer.onclick = function () {
@@ -85,6 +137,7 @@ export class MapComponent implements OnInit {
     }
     this.renderMap();
   }
+
 
   private mapClickHandler(overlay: any) {
     const content = document.getElementById('popup-content');
@@ -113,5 +166,13 @@ export class MapComponent implements OnInit {
 
   private renderMap() {
     setTimeout(() => this.map.updateSize());
+  }
+
+  public onMapButtonClicked() {
+    if(this.currentMapState === MapState.initial)
+      this.currentMapState = MapState.end;
+    else if(this.currentMapState === MapState.end) {
+      this.router.navigate(['/route-data']);
+    }
   }
 }
