@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Globalization;
+using API.services;
 using Context;
 using Context.DAL;
 using Context.UnitOfWork;
@@ -117,13 +118,14 @@ namespace API.Controllers
         [HttpGet("ListSensorDataPoints")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SensorData))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<List<SensorData>>> ListSensorDataPoints()
+        public async Task<ActionResult> ListSensorDataPoints()
         {
             List<SensorData> sensorData = mongo.SensorDataPoints.FilterBy(x => true).ToList();
 
             if (sensorData != null)
             {
-                return sensorData;
+                SensorDataService.Instance.SetAllSensorDataPoints(sensorData);
+                return Ok();
             }
 
             return NotFound();
