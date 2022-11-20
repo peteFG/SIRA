@@ -1,82 +1,142 @@
-﻿using Context.DAL;
+﻿using System.Collections;
+using System.Globalization;
+using Context.DAL;
+using Microsoft.IdentityModel.Tokens;
 using Type = Context.DAL.Type;
 
 namespace API.services;
 
 public class SensorDataService
 {
-    public static readonly SensorDataService Instance = new SensorDataService();
-    private List<SensorData> _allSensorDataPoints = new List<SensorData>();
+    public static readonly SensorDataService Instance = new();
+    private List<SensorData> _allSensorDataPoints = new();
 
+    public void SetAllSensorDataPoints(List<SensorData> sensorData)
+    {
+        _allSensorDataPoints = sensorData;
+    }
 
-    public List<SensorDataCoord> GetNotableHeightDifferences(List<SensorData> sensorData)
+    public ArrayList GetNotableDifferencesAndOvertakes()
     {
         List<SensorDataCoord> coordListHeight = new List<SensorDataCoord>();
         List<SensorDataCoord> coordListSpeed = new List<SensorDataCoord>();
-        for (int i = 0; i < _allSensorDataPoints.Count; i += 2)
+        List<int> overtakeDistances = new List<int>();
+        var returnList = new ArrayList();
+
+        if (_allSensorDataPoints.IsNullOrEmpty())
+        {
+            return returnList;
+        }
+
+        for (int i = 0; i < _allSensorDataPoints.Count - 1; i += 2)
         {
             var currentDataPoint = _allSensorDataPoints[i];
             var nextDataPoint = _allSensorDataPoints[i + 1];
-            var result1Altitude = float.TryParse(currentDataPoint.Altitude, out var parsedValueAltitude1);
-            var result2Altitude = float.TryParse(nextDataPoint.Altitude, out var parsedValueAltitude2);
-            if (result1Altitude && result2Altitude)
-            {
-                var absoluteAltitudeDifference = Math.Abs(parsedValueAltitude1 - parsedValueAltitude2);
-                if (absoluteAltitudeDifference > 1)
-                {
-                    coordListHeight.Add(new SensorDataCoord
-                    {
-                        XCoord = currentDataPoint.XCoord,
-                        YCoord = currentDataPoint.YCoord,
-                        Difference = absoluteAltitudeDifference,
-                        Type = Type.Altitude
-                    });
-                }
-            }
 
-            var result1Speed = float.TryParse(currentDataPoint.Speed, out var parsedValueSpeed1);
-            var result2Speed = float.TryParse(nextDataPoint.Speed, out var parsedValueSpeed2);
-            if (result1Speed && result2Speed)
+            CheckForHeightDifferences(currentDataPoint, nextDataPoint, coordListHeight);
+            CheckForSpeedDifferences(currentDataPoint, nextDataPoint, coordListSpeed);
+            CheckForOvertakes(currentDataPoint, nextDataPoint, overtakeDistances);
+        }
+
+        returnList.AddRange(coordListHeight);
+        returnList.AddRange(coordListSpeed);
+
+        var overTakeList = CategoriseOvertakes(overtakeDistances);
+        returnList.AddRange(overTakeList);
+        return returnList;
+    }
+
+    private static void CheckForHeightDifferences(SensorData currentDataPoint, SensorData nextDataPoint,
+        List<SensorDataCoord> coordListHeight)
+    {
+        bool validCurrentAltitude = double.TryParse(currentDataPoint.Altitude, NumberStyles.Any,
+            CultureInfo.InvariantCulture, out var parsedValueCurrentAltitude);
+        bool validNextAltitude = double.TryParse(nextDataPoint.Altitude, NumberStyles.Any,
+            CultureInfo.InvariantCulture, out var parsedValueNextAltitude);
+
+        if (!validCurrentAltitude || !validNextAltitude) return;
+
+        var absoluteAltitudeDifference =
+            Math.Abs(Math.Round((decimal) (parsedValueCurrentAltitude - parsedValueNextAltitude), 2));
+        if (absoluteAltitudeDifference > 1)
+        {
+            coordListHeight.Add(new SensorDataCoord
             {
-                var speedDifference = parsedValueSpeed1 - parsedValueSpeed2;
-                if (Math.Abs(speedDifference) > 1)
+                XCoord = currentDataPoint.XCoord,
+                YCoord = currentDataPoint.YCoord,
+                Difference = absoluteAltitudeDifference,
+                Type = Type.Altitude
+            });
+        }
+    }
+
+    private static void CheckForSpeedDifferences(SensorData currentDataPoint, SensorData nextDataPoint,
+        List<SensorDataCoord> coordListSpeed)
+    {
+        bool validCurrentSpeed = float.TryParse(currentDataPoint.Speed, NumberStyles.Any,
+            CultureInfo.InvariantCulture, out var parsedValueCurrentSpeed);
+        bool validNextSpeed = float.TryParse(nextDataPoint.Speed, NumberStyles.Any,
+            CultureInfo.InvariantCulture, out var parsedValueNextSpeed);
+
+        if (!validCurrentSpeed || !validNextSpeed) return;
+        var speedDifference = Math.Round((decimal) (parsedValueCurrentSpeed - parsedValueNextSpeed), 2);
+        if (Math.Abs(speedDifference) > 1)
+        {
+            coordListSpeed.Add(new SensorDataCoord
+            {
+                XCoord = currentDataPoint.XCoord,
+                YCoord = currentDataPoint.YCoord,
+                Difference = speedDifference,
+                Type = Type.Speed
+            });
+        }
+    }
+
+    private static void CheckForOvertakes(SensorData currentDataPoint, SensorData nextDataPoint,
+        List<int> overtakeDistances)
+    {
+        var validDistanceLeftCurrent =
+            int.TryParse(currentDataPoint.DistanceLeft, out var parsedValueCurrentDistance);
+        var validDistanceLeftNext = int.TryParse(nextDataPoint.DistanceLeft, out var parsedValueNextDistance);
+        if (validDistanceLeftCurrent)
+        {
+            overtakeDistances.Add(parsedValueCurrentDistance);
+        }
+
+        if (validDistanceLeftNext)
+        {
+            overtakeDistances.Add(parsedValueNextDistance);
+        }
+    }
+
+    private static List<OvertakingDistance> CategoriseOvertakes(List<int> overtakeDistances)
+    {
+        var overTakeList = new List<OvertakingDistance>();
+        for (int rangeFrom = 0; rangeFrom < overtakeDistances.Max(); rangeFrom += 5)
+        {
+            var rangeTo = rangeFrom + 5;
+            foreach (var overTakeDistance in overtakeDistances)
+            {
+                if (overTakeDistance <= rangeFrom || overTakeDistance >= rangeTo) continue;
+                if (overTakeList.Exists(x => x.RangeFrom.Equals(rangeFrom) && x.RangeTo.Equals(rangeTo)))
                 {
-                    coordListSpeed.Add(new SensorDataCoord
+                    var overTakeEntry = overTakeList.Find(
+                        x => x.RangeFrom.Equals(rangeFrom) && x.RangeTo.Equals(rangeTo));
+                    overTakeEntry.Amount += 1;
+                }
+                else
+                {
+                    overTakeList.Add(new OvertakingDistance
                     {
-                        XCoord = currentDataPoint.XCoord,
-                        YCoord = currentDataPoint.YCoord,
-                        Difference = speedDifference,
-                        Type = Type.Speed
+                        RangeFrom = rangeFrom,
+                        RangeTo = rangeTo,
+                        Amount = 1,
+                        Range = rangeFrom + "-" + rangeTo
                     });
                 }
             }
         }
 
-        var returnList = new List<SensorDataCoord>();
-        returnList.AddRange(coordListHeight);
-        returnList.AddRange(coordListSpeed);
-        return returnList;
-
-        //TODO
-        // check for speed and altitude 
-        // push to array when altitude differs by 1
-        // push to speed Array when altitude differs by 1
-
-        // create 3rd array for "Überholabstand" that returns a list with
-        // all LEFT values grouped by 5 (0-5 cm, 5-10cm.....)
-        // and the amount that values appears
-        // 0-5 appears x times
-
-        // return value of that method can be SensorDataAnalyse with properties
-        // HeightCoord of Type SensorDataCoord
-        // SpeedCoord of Type SensorDataCoord
-        // OvertakingDistance of Type (to define, example: string that contains 0-5cm and amount prop)
-
-        // The call in the controller returns a list<SensorDataAnalyse> the same as this method
-    }
-
-    public void SetAllSensorDataPoints(List<SensorData> sensorData)
-    {
-        _allSensorDataPoints = sensorData;
+        return overTakeList;
     }
 }
