@@ -1,0 +1,15 @@
+<div *ngIf="disclaimer" style="margin-bottom: .5em; padding-left: 1.5em; padding-right: 1.5em;">{{disclaimer}}</div>
+<div class="stats-list-outer-container">
+  <div *ngFor="let item of coordList" class="stats-list-item">
+    <div style="display: flex; line-height: 1.5em;">
+      <div style="display: flex; flex-direction: column;     margin-right: 0.5em;">
+        <span><b>Unterschied:</b></span>
+        <span><b>Position:</b> </span>
+      </div>
+      <div style="display: flex; flex-direction: column;">
+        <span>{{item.difference}} {{valueSuffix}}</span>
+        <span> [{{item.xCoord}}, {{item.yCoord}}] </span>
+      </div>
+    </div>
+  </div>
+</div>

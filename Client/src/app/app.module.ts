@@ -8,6 +8,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AutoCompleteModule } from 'ionic4-auto-complete';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,6 +18,7 @@ import { AutoCompleteModule } from 'ionic4-auto-complete';
     IonicModule.forRoot({ mode: 'md' }),
     AppRoutingModule,
     AutoCompleteModule,
+    NgChartsModule,
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

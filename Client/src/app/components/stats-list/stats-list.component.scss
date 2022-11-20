@@ -1,0 +1,52 @@
+.toolbar-container {
+    --background: #537953;
+}
+
+ion-menu-button {
+    color: white;
+}
+
+.ion-buttons-container {
+    margin-left: 0;
+}
+
+.title-container {
+    padding-left: 0;
+    padding-right: 0;
+    text-align: center;
+}
+
+.header-logo-container {
+    height: 45px;
+    width: 140px;
+    padding-left: 2em;
+}
+
+.header-items-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.info-icon {
+    padding-right: 0.7em;
+    color: white;
+    height: 30px;
+    width: 30px;
+}
+
+.stats-list-outer-container {
+    padding: 0 1.5em 1em 1.5em;
+    overflow: auto;
+    height: 100%;
+}
+
+.stats-list-item {
+    margin-bottom: .25em;
+    padding-bottom: .25em;
+    border-bottom: 1px solid #537953;
+}
+
+:host {
+    height: calc(100% - 100px);
+}

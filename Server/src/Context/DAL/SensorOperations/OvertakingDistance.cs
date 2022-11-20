@@ -6,6 +6,8 @@ public class OvertakingDistance
     public int Amount { get; set; }
     public int RangeFrom { get; set; }
     public int RangeTo { get; set; }
+    public string Type { get; set; } = "OvertakingDistance";
+
 
     public string GetRangeWithAmount()
     {

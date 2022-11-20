@@ -24,6 +24,10 @@ export class BackendService {
     return this.httpClient.get(this.dangerZoneUrl + url).toPromise();
   }
 
+  public async sensorData(url: string) {
+    return this.httpClient.get(this.sensorDataUrl + url).toPromise();
+  }
+
   public async downloadCommonFile(url: string, filename: string = 'sira.pdf') {
     return this.httpClient
       .get(this.commonFilesUrl + url, { responseType: 'blob' })

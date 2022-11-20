@@ -1,0 +1,20 @@
+.toolbar-container {
+    --background: #537953;
+}
+
+ion-menu-button {
+    color: white;
+}
+
+.ion-buttons-container {
+    margin-left: 0;
+}
+
+.stats-diagram-outer-container {
+    padding: 0 1.5em 1em 1.5em;
+    height: 100%;
+}
+
+:host {
+    height: 100%;
+}
