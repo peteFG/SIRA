@@ -11,8 +11,11 @@ namespace Context.UnitOfWork
 
         public MongoDBUnitOfWork()
         {
-            var builder = new ConfigurationBuilder().SetBasePath(Constants.CurrentFolder)
-                .AddJsonFile("appsettings.json");
+            var builder = new ConfigurationBuilder().SetBasePath(Constants.CurrentFolder);
+            if (File.Exists(Constants.CurrentFolder + "\\appsettings.local.json"))
+                builder.AddJsonFile("appsettings.local.json");
+            else
+                builder.AddJsonFile("appsettings.json");
 
             MongoDBSettings settings = builder.Build().GetSection("MongoDbSettings").Get<MongoDBSettings>();
             MongoDBContext context = new MongoDBContext(settings);

@@ -107,7 +107,7 @@ public class FirstAidSeeding : BaseUnitTests
 
         aid.Category = Category.FirstAid;
         aid.Title = "Unfallbericht";
-        aid.Text = "<b>Das musst du beim Unfallbericht wissen</b>\n\n\n\n"
+        aid.Text = "Das musst du beim Unfallbericht wissen\n\n\n\n"
             + "<ul><li>Personendaten</li>\n\n"
             + "<li>Fahrzeugdaten von allen Beteiligten</li>\n\n"
             + "<li>Versicherungsnummer</li>\n\n"

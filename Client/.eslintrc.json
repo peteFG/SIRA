@@ -23,6 +23,7 @@
       "rules": {
         "@typescript-eslint/member-ordering": "off",
         "@typescript-eslint/quotes": "off",
+        "prefer-arrow/prefer-arrow-functions": "off",
         "@angular-eslint/component-class-suffix": [
           "error",
           {

@@ -13,7 +13,7 @@ import { StatsPage } from './stats/stats.page';
 import { InfoDetailPage } from './subpages/info-detail/info-detail.page';
 import { SiraInfoPage } from './sira-info/sira-info.page';
 import { UploadDataPage } from './upload-data/upload-data.page';
-
+import { RouteDataPage } from './route/route-data/route-data.page';
 
 @NgModule({
   imports: [
@@ -21,9 +21,19 @@ import { UploadDataPage } from './upload-data/upload-data.page';
     FormsModule,
     IonicModule,
     HomePageRoutingModule,
-    ComponentsModule
+    ComponentsModule,
   ],
-  declarations: [HomePage, LawPage, RoutePage, AidPage, LawPage, StatsPage, InfoDetailPage,
-  SiraInfoPage, UploadDataPage]
+  declarations: [
+    HomePage,
+    LawPage,
+    RoutePage,
+    AidPage,
+    LawPage,
+    StatsPage,
+    InfoDetailPage,
+    SiraInfoPage,
+    UploadDataPage,
+    RouteDataPage,
+  ],
 })
 export class PagesModule {}
