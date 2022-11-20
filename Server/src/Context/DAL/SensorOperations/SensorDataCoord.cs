@@ -3,7 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Context.DAL;
+namespace Context.DAL.SensorOperations;
 
 public class SensorDataCoord
 {

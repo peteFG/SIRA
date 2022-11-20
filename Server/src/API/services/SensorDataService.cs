@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Globalization;
 using Context.DAL;
+using Context.DAL.SensorOperations;
 using Microsoft.IdentityModel.Tokens;
-using Type = Context.DAL.Type;
+using Type = Context.DAL.SensorOperations.Type;
 
 namespace API.services;
 

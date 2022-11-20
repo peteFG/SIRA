@@ -1,6 +1,6 @@
 ﻿using CsvHelper.Configuration.Attributes;
 
-namespace Context.DAL;
+namespace Context.DAL.SensorOperations;
 
 [Delimiter(";")]
 public class SensorDataMixin

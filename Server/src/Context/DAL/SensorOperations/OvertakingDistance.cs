@@ -1,4 +1,4 @@
-﻿namespace Context.DAL;
+﻿namespace Context.DAL.SensorOperations;
 
 public class OvertakingDistance
 {
