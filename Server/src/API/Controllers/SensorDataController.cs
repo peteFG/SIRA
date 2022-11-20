@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using API.services;
 using Context;
@@ -112,23 +113,23 @@ namespace API.Controllers
 
 
         /// <summary>
-        /// Gets all existing SensorDataPoints.
+        /// Loads all SensorDataPoints into singleton.
         /// If no datapoints are found a 404 is raised.
         /// </summary>
-        [HttpGet("ListSensorDataPoints")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SensorData))]
+        [HttpGet("LoadAllSensorDataPoints")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> ListSensorDataPoints()
+        public Task<ActionResult> LoadAllSensorDataPoints()
         {
             List<SensorData> sensorData = mongo.SensorDataPoints.FilterBy(x => true).ToList();
 
             if (sensorData != null)
             {
                 SensorDataService.Instance.SetAllSensorDataPoints(sensorData);
-                return Ok();
+                return Task.FromResult<ActionResult>(Ok());
             }
 
-            return NotFound();
+            return Task.FromResult<ActionResult>(NotFound());
         }
 
 
@@ -150,6 +151,18 @@ namespace API.Controllers
             }
 
             return NotFound();
+        }
+
+
+        /// <summary>
+        /// Gets all notable documented Height and Speed Differences.
+        /// Also gets all documented overtakes on the left side and categorizes them in steps of 5.
+        /// </summary>
+        [HttpGet("GetNotableDifferencesAndOvertakes")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ArrayList))]
+        public Task<ActionResult<ArrayList>> GetNotableDifferencesAndOvertakes()
+        {
+            return Task.FromResult<ActionResult<ArrayList>>(SensorDataService.Instance.GetNotableDifferencesAndOvertakes());
         }
     }
 }
