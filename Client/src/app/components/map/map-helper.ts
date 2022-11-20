@@ -6,7 +6,7 @@ import { fromLonLat } from 'ol/proj';
 import VectorSource from 'ol/source/Vector';
 import { Fill, Icon, Stroke, Style, Text } from 'ol/style';
 
-export const defaultCircleRadius = 20;
+export const defaultCircleRadius = 24;
 
 export function getCircleFeatureStyle(coords: number[]) {
     const circleFeature = new Feature({
@@ -61,7 +61,7 @@ export function getVectorLayer(circleFeature: Feature<Circle>) {
       })
 }
 
-export function getMarkerLayer(coord: number[], icon: string = "map-marker.png") {
+export function getMarkerLayer(coord: number[], size: number[], icon: string = "map-marker.png") {
   var feature =  new Feature({
     geometry: new Point(fromLonLat(coord))
 });
@@ -70,6 +70,7 @@ feature.setStyle(new Style({
     anchor: [0.5, 46],
     anchorXUnits: 'fraction',
     anchorYUnits: 'pixels',
+    size,
     src: '/assets/marker/'+icon
   })
 }))
