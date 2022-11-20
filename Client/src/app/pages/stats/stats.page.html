@@ -7,6 +7,7 @@
           [value]="selValue" cancelText="Abbrechen" (ionChange)="onSelValueChanged($event)">
           <ion-select-option value="dangerZones">Gefahrenstelle</ion-select-option>
           <ion-select-option value="overtakingDistance">Überholabstand</ion-select-option>
+          <ion-select-option value="minOvertakingDistance">Mindestüberholabstand</ion-select-option>
           <ion-select-option value="heightDifferences">Auffällige Höhenunterschiede</ion-select-option>
           <ion-select-option value="speedDifferences">Auffällige Geschwindigkeits-Änderungen</ion-select-option>
         </ion-select>
@@ -16,6 +17,15 @@
         [disclaimer]="'Disclaimer'"></stats-list>
       <stats-list *ngIf="selValue === 'heightDifferences'" [coordList]="altitudeList" [valueSuffix]="'cm'"
         [disclaimer]="'Disclaimer'"></stats-list>
+      <stats-bar-diagram
+        *ngIf="selValue === 'overtakingDistance' && overtakingDistanceList && overtakingDistanceList.length > 0"
+        [data]="overtakingDistanceList">
+      </stats-bar-diagram>
+      <stats-pie-diagram
+        *ngIf="selValue === 'minOvertakingDistance' && overtakingDistanceList && overtakingDistanceList.length > 0"
+        [data]="overtakingDistanceList">
+      </stats-pie-diagram>
+
     </div>
   </div>
 </ion-content>

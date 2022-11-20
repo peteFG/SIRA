@@ -9,7 +9,7 @@ import { OvertakingDistance, SensorDataCoord, SensorDataService } from 'src/app/
   providers: [SensorDataService]
 })
 export class StatsPage implements OnInit {
-  public selValue: string = "heightDifferences";
+  public selValue: string = "minOvertakingDistance";
 
   public speedList: SensorDataCoord[] = [];
   public altitudeList: SensorDataCoord[] = [];

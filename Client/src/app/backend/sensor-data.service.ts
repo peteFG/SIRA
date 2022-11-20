@@ -38,7 +38,7 @@ export class SensorDataService {
       this.backendService.sensorData("GetNotableDifferencesAndOvertakes").then(result => {
         this.speedList$.next((result as any[]).filter(item => item.type === "Speed") as SensorDataCoord[]);
         this.altitudeList$.next((result as any[]).filter(item => item.type === "Altitude") as SensorDataCoord[]);
-        this.overtakingDistanceList$.next((result as any[]).filter(item => item.type === "OvertakingDistance") as OvertakingDistance[]);
+        this.overtakingDistanceList$.next( (result as any[]).filter(item => item.type === "OvertakingDistance") as OvertakingDistance[]);
       })
     })
   }
