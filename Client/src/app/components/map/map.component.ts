@@ -32,6 +32,7 @@ export enum MapState {
 export class MapComponent implements OnInit, AfterViewInit {
   @Input() public start: RouteMappingData;
   @Input() public end: RouteMappingData;
+  @Input() public showButton: boolean = true;
 
   public map: Map;
   public dangerZones: DangerZone[] = [];
@@ -82,8 +83,10 @@ export class MapComponent implements OnInit, AfterViewInit {
 
 
   private addMarkers() {
-    this.map.addLayer(getMarkerLayer([+this.start.yCoord, +this.start.xCoord], [48,48]));
-    this.map.addLayer(getMarkerLayer([+this.end.yCoord, +this.end.xCoord],[48,48], "map-marker-check.png"));
+    if(this.start)
+      this.map.addLayer(getMarkerLayer([+this.start.yCoord, +this.start.xCoord], [48,48]));
+    if(this.end)
+      this.map.addLayer(getMarkerLayer([+this.end.yCoord, +this.end.xCoord],[48,48], "map-marker-check.png"));
   }
 
   private initializeMap() {
@@ -151,8 +154,8 @@ export class MapComponent implements OnInit, AfterViewInit {
         const dist = fromLonLat([+zone.yCoord, +zone.xCoord]);
         const y = dist[0];
         const x = dist[1];
-        if((y-30) < coordinate[0] && (y+30) > coordinate[0]
-        && (x-30) < coordinate[1] && (x+30) > coordinate[1]) {
+        if(((y-30) < coordinate[0] && (y+30) > coordinate[0])
+        && ((x+40) > coordinate[1] && coordinate[1] > x)) {
           text = zone.toolTipText;
           break;
         }

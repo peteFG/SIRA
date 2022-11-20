@@ -12,6 +12,7 @@ import { HighlighterPipe } from '../pipes/highlighter.pipe';
 import { InfoOverviewItemComponent } from './info/info-overview/info-overview-item/info-overview-item.component';
 import { AppButtonControl } from './controls/app-button/app-button.control';
 import { AppModalComponent } from './modal/modal.component';
+import { StatsListComponent } from './stats-list/stats-list.component';
 
 const components = [
   AppHeaderComponent,
@@ -24,6 +25,7 @@ const components = [
   InfoOverviewItemComponent,
   AppButtonControl,
   AppModalComponent,
+  StatsListComponent,
 ];
 
 @NgModule({

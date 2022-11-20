@@ -26,3 +26,29 @@ ion-menu-button {
 #container a {
   text-decoration: none;
 }
+
+.select-outer-container {
+  padding: 1em;
+}
+
+.select-items {
+  border: 2px solid #537953;
+  border-radius: 10px;
+  padding-right: 10px;
+}
+
+ion-select::part(icon) {
+  color: #537953;
+  opacity: 1;
+}
+
+.stats-container {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+
+sira-map {
+  height: 100%;
+  width: 100%;
+}
