@@ -20,7 +20,6 @@ export class RouteDataPage implements OnInit {
   public buttonText: string = "Ohne Auswahl fortfahren";
   constructor(private router: Router) {}
 
-
   ngOnInit() {
     const item = localStorage.getItem("dataCheckValues");
     if(item) {

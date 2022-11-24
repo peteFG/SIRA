@@ -1,0 +1,5 @@
+<div class="stats-diagram-outer-container">
+  <canvas *ngIf="lineChartData && lineChartData.length > 0" baseChart [datasets]="labelMFL" [labels]="lineChartLabels"
+    [options]="lineChartOptions" [type]="chartType" (chartHover)="chartHovered($event)"
+    (chartClick)="chartClicked($event)"></canvas>
+</div>

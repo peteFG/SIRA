@@ -12,6 +12,10 @@ import { HighlighterPipe } from '../pipes/highlighter.pipe';
 import { InfoOverviewItemComponent } from './info/info-overview/info-overview-item/info-overview-item.component';
 import { AppButtonControl } from './controls/app-button/app-button.control';
 import { AppModalComponent } from './modal/modal.component';
+import { StatsListComponent } from './stats-list/stats-list.component';
+import { StatsBarDiagramComponent } from './stats-bar-diagram/stats-bar-diagram.component';
+import { NgChartsModule } from 'ng2-charts';
+import { StatsPieDiagramComponent } from './stats-pie-diagram/stats-pie-diagram.component';
 
 const components = [
   AppHeaderComponent,
@@ -24,10 +28,13 @@ const components = [
   InfoOverviewItemComponent,
   AppButtonControl,
   AppModalComponent,
+  StatsListComponent,
+  StatsBarDiagramComponent,
+  StatsPieDiagramComponent,
 ];
 
 @NgModule({
-  imports: [CommonModule, FormsModule, IonicModule],
+  imports: [CommonModule, FormsModule, IonicModule, NgChartsModule],
   declarations: [...components],
   exports: [...components],
 })

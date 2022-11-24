@@ -41,8 +41,11 @@ public class SensorDataService
             CheckForOvertakes(currentDataPoint, nextDataPoint, overtakeDistances);
         }
 
-        returnList.AddRange(coordListHeight);
-        returnList.AddRange(coordListSpeed);
+        // For the mvp we take the first 20 elements of the lists
+        // afterwards, server side pagiation is needed
+
+        returnList.AddRange(coordListHeight.Take(20).ToList());
+        returnList.AddRange(coordListSpeed.Take(20).ToList());
 
         var overTakeList = CategoriseOvertakes(overtakeDistances);
         returnList.AddRange(overTakeList);

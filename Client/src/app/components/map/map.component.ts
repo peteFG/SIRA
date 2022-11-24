@@ -32,6 +32,7 @@ export enum MapState {
 export class MapComponent implements OnInit, AfterViewInit {
   @Input() public start: RouteMappingData;
   @Input() public end: RouteMappingData;
+  @Input() public showButton: boolean = true;
 
   public map: Map;
   public dangerZones: DangerZone[] = [];
@@ -82,8 +83,10 @@ export class MapComponent implements OnInit, AfterViewInit {
 
 
   private addMarkers() {
-    this.map.addLayer(getMarkerLayer([+this.start.yCoord, +this.start.xCoord]));
-    this.map.addLayer(getMarkerLayer([+this.end.yCoord, +this.end.xCoord], "map-marker-check.png"));
+    if(this.start)
+      this.map.addLayer(getMarkerLayer([+this.start.yCoord, +this.start.xCoord], [48,48]));
+    if(this.end)
+      this.map.addLayer(getMarkerLayer([+this.end.yCoord, +this.end.xCoord],[48,48], "map-marker-check.png"));
   }
 
   private initializeMap() {
@@ -113,8 +116,9 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   private renderMapWithDangerZones() {
     for(const zone of this.dangerZones) {
-      const circleFeature = getCircleFeatureStyle([+zone.yCoord,+zone.xCoord]);
-      this.map.addLayer(getVectorLayer(circleFeature));
+      // const circleFeature = getCircleFeatureStyle([+zone.yCoord,+zone.xCoord]);
+      // this.map.addLayer(getVectorLayer(circleFeature));
+      this.map.addLayer(getMarkerLayer([+zone.yCoord,+zone.xCoord],[24,24], "alert-circle.png"));
     }
     if(this.dangerZones.length > 0) {
       const container = document.getElementById('popup');
@@ -150,8 +154,8 @@ export class MapComponent implements OnInit, AfterViewInit {
         const dist = fromLonLat([+zone.yCoord, +zone.xCoord]);
         const y = dist[0];
         const x = dist[1];
-        if((y-defaultCircleRadius) < coordinate[0] && (y+defaultCircleRadius) > coordinate[0]
-        && (x-defaultCircleRadius) < coordinate[1] && (x+defaultCircleRadius) > coordinate[1]) {
+        if(((y-30) < coordinate[0] && (y+30) > coordinate[0])
+        && ((x+40) > coordinate[1] && coordinate[1] > x)) {
           text = zone.toolTipText;
           break;
         }
