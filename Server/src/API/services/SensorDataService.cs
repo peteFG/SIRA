@@ -68,7 +68,8 @@ public class SensorDataService
             Type.Speed => Math.Round((decimal)(parsedCurrentValue - parsedNextValue), 2),
             _ => decimal.Zero
         };
-        if (Math.Abs(valueDifference) > 1)
+        if ((type == Type.Altitude && Math.Abs(valueDifference) > 1) 
+            || (type == Type.Speed && Math.Abs(valueDifference) > 3))
         {
             coordListHeight.Add(new SensorDataCoord
             {
