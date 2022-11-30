@@ -1,5 +1,5 @@
 .toolbar-container {
-    --background: #537953;
+    --background: var(--main-color);
 }
 
 ion-menu-button {
@@ -44,7 +44,7 @@ ion-menu-button {
 .stats-list-item {
     margin-bottom: .25em;
     padding-bottom: .25em;
-    border-bottom: 1px solid #537953;
+    border-bottom: 1px solid var(--main-color);
 }
 
 :host {

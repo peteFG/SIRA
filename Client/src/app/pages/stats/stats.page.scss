@@ -32,13 +32,13 @@ ion-menu-button {
 }
 
 .select-items {
-  border: 2px solid #537953;
+  border: 2px solid var(--main-color);
   border-radius: 10px;
   padding-right: 10px;
 }
 
 ion-select::part(icon) {
-  color: #537953;
+  color: var(--main-color);
   opacity: 1;
 }
 

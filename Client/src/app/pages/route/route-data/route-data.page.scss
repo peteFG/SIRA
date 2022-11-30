@@ -39,7 +39,7 @@ ion-menu-button {
 }
 
 .play-forward-icon {
-  color: #537953;
+  color: var(--main-color);
   height: 60px;
   width: 60px;
 }
@@ -65,7 +65,7 @@ ion-menu-button {
 }
 
 .checkbox-item-container:first-child {
-  border-bottom: 1.5px solid #537953;
+  border-bottom: 1.5px solid var(--main-color);
   margin-bottom: 1em;
   padding-bottom: 0.4em;
 }
@@ -84,10 +84,10 @@ ion-menu-button {
 
 ion-checkbox {
   --background: none;
-  --border-color: #537953;
-  --border-color-checked: #537953;
+  --border-color: var(--main-color);
+  --border-color-checked: var(--main-color);
   --background-checked: none;
-  --checkmark-color: #537953;
+  --checkmark-color: var(--main-color);
 }
 
 .modal-route-data-container {
@@ -98,7 +98,7 @@ ion-checkbox {
 }
 
 .accessibility-icon {
-  color: #537953;
+  color: var(--main-color);
   height: 40px;
   width: 40px;
   margin-bottom: 2em;
