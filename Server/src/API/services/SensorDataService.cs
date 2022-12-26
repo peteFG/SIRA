@@ -34,8 +34,10 @@ public class SensorDataService
             var currentDataPoint = _allSensorDataPoints[i];
             var nextDataPoint = _allSensorDataPoints[i + 1];
 
-            CheckForHeightDifferences(currentDataPoint, nextDataPoint, coordListHeight);
-            CheckForSpeedDifferences(currentDataPoint, nextDataPoint, coordListSpeed);
+            CheckForDifferences(currentDataPoint, currentDataPoint.Speed, nextDataPoint.Speed, coordListSpeed,
+                Type.Speed);
+            CheckForDifferences(currentDataPoint, currentDataPoint.Altitude, nextDataPoint.Altitude, coordListHeight,
+                Type.Altitude);
             CheckForOvertakes(currentDataPoint, nextDataPoint, overtakeDistances);
         }
 
@@ -50,48 +52,31 @@ public class SensorDataService
         return returnList;
     }
 
-    private static void CheckForHeightDifferences(SensorData currentDataPoint, SensorData nextDataPoint,
-        List<SensorDataCoord> coordListHeight)
+    private static void CheckForDifferences(SensorData currentDataPoint, string currentValue, string nextValue,
+        List<SensorDataCoord> coordListHeight, Type type)
     {
-        bool validCurrentAltitude = double.TryParse(currentDataPoint.Altitude, NumberStyles.Any,
-            CultureInfo.InvariantCulture, out var parsedValueCurrentAltitude);
-        bool validNextAltitude = double.TryParse(nextDataPoint.Altitude, NumberStyles.Any,
-            CultureInfo.InvariantCulture, out var parsedValueNextAltitude);
+        bool currentValueValid = double.TryParse(currentValue, NumberStyles.Any,
+            CultureInfo.InvariantCulture, out var parsedCurrentValue);
+        bool nextValueValid = double.TryParse(nextValue, NumberStyles.Any,
+            CultureInfo.InvariantCulture, out var parsedNextValue);
 
-        if (!validCurrentAltitude || !validNextAltitude) return;
+        if (!currentValueValid || !nextValueValid) return;
 
-        var absoluteAltitudeDifference =
-            Math.Abs(Math.Round((decimal) (parsedValueCurrentAltitude - parsedValueNextAltitude), 2));
-        if (absoluteAltitudeDifference > 1)
+        var valueDifference = type switch
+        {
+            Type.Altitude => Math.Abs(Math.Round((decimal)(parsedCurrentValue - parsedNextValue), 2)),
+            Type.Speed => Math.Round((decimal)(parsedCurrentValue - parsedNextValue), 2),
+            _ => decimal.Zero
+        };
+        if ((type == Type.Altitude && Math.Abs(valueDifference) > 1) 
+            || (type == Type.Speed && Math.Abs(valueDifference) > 3))
         {
             coordListHeight.Add(new SensorDataCoord
             {
                 XCoord = currentDataPoint.XCoord,
                 YCoord = currentDataPoint.YCoord,
-                Difference = absoluteAltitudeDifference,
-                Type = Type.Altitude
-            });
-        }
-    }
-
-    private static void CheckForSpeedDifferences(SensorData currentDataPoint, SensorData nextDataPoint,
-        List<SensorDataCoord> coordListSpeed)
-    {
-        bool validCurrentSpeed = float.TryParse(currentDataPoint.Speed, NumberStyles.Any,
-            CultureInfo.InvariantCulture, out var parsedValueCurrentSpeed);
-        bool validNextSpeed = float.TryParse(nextDataPoint.Speed, NumberStyles.Any,
-            CultureInfo.InvariantCulture, out var parsedValueNextSpeed);
-
-        if (!validCurrentSpeed || !validNextSpeed) return;
-        var speedDifference = Math.Round((decimal) (parsedValueCurrentSpeed - parsedValueNextSpeed), 2);
-        if (Math.Abs(speedDifference) > 1)
-        {
-            coordListSpeed.Add(new SensorDataCoord
-            {
-                XCoord = currentDataPoint.XCoord,
-                YCoord = currentDataPoint.YCoord,
-                Difference = speedDifference,
-                Type = Type.Speed
+                Difference = valueDifference,
+                Type = type
             });
         }
     }
