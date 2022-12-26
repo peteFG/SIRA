@@ -9,12 +9,10 @@ import { InfoService } from 'src/app/backend/info.service';
 })
 export class AppButtonControl implements OnInit {
   @Input() public text: string;
-  @Input() public hasArrowIcon: boolean = false;
   @Output() public onClick = new EventEmitter();
   constructor(public router: Router, public infoService: InfoService) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   public onButtonClicked() {
     this.onClick.emit();

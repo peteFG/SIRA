@@ -29,7 +29,7 @@ ion-searchbar {
 }
 
 .accident-report-button {
-    width: 100%;
+    width: 80%;
     display: flex;
     justify-content: center;
 }
@@ -37,3 +37,11 @@ ion-searchbar {
     font-weight: 700;
     padding: .8em;
 }
+
+.button-outer-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+}
+

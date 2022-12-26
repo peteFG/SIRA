@@ -4,6 +4,8 @@
     <div class="info-text-container" [class.info-text-container-report]="filteredInfo?.action === 'AccidentReport'"
         [innerHtml]="filteredInfo?.text | highlighter:filterText:'partial'">
     </div>
-    <app-button class="accident-report-button" *ngIf="filteredInfo?.action === 'AccidentReport'"
+    <div class="button-outer-container">
+        <app-button class="accident-report-button" *ngIf="filteredInfo?.action === 'AccidentReport'"
         [text]="'PDF Vorlage Download'" (onClick)="onAccidentReportClicked()"></app-button>
+    </div>
 </div>

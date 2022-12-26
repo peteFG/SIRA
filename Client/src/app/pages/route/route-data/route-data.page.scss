@@ -67,11 +67,11 @@ ion-menu-button {
 .checkbox-item-container:first-child {
   border-bottom: 1.5px solid var(--main-color);
   margin-bottom: 1em;
-  padding-bottom: 0.4em;
+  padding-bottom: 1em;
 }
 
 .checkbox-item-container {
-  height: 35px;
+  height: 50px;
   display: flex;
   align-items: center;
 }
@@ -79,7 +79,7 @@ ion-menu-button {
 .save-state-checkbox-container {
   display: flex;
   align-items: center;
-  margin-top: 1em;
+  margin-top: 3em;
 }
 
 ion-checkbox {
