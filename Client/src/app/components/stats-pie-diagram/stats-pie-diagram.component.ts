@@ -21,7 +21,7 @@ export class StatsPieDiagramComponent implements AfterViewInit{
     this.labelMFL = [
       { data: this.lineChartData,
         label: "Anzahl der Überholungen",
-        backgroundColor: ["#537953", "#833737"]
+        backgroundColor: ["#833737", "#537953"]
       }
     ];
   }
@@ -34,6 +34,12 @@ export class StatsPieDiagramComponent implements AfterViewInit{
     plugins: {
       legend: {
         display: true,
+        labels: {
+            boxWidth: 25,
+            font: {
+                size: 16
+            }
+        },
       },
     }
   };

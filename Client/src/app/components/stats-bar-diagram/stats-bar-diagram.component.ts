@@ -18,7 +18,7 @@ export class StatsBarDiagramComponent implements AfterViewInit{
     this.lineChartLabels = this.data.map(item => item.range + " m");
     this.labelMFL = [
       { data: this.lineChartData,
-        label: "Anzahl der Überholungen",
+        label: "Anzahl der Überholungen innerorts",
         backgroundColor: ["#537953"]
       }
     ];
@@ -38,6 +38,12 @@ export class StatsBarDiagramComponent implements AfterViewInit{
     },
     plugins: {
       legend: {
+        labels: {
+            boxWidth: 25,
+            font: {
+                size: 16
+            }
+        },
         display: true,
       },
     }
@@ -46,7 +52,7 @@ export class StatsBarDiagramComponent implements AfterViewInit{
       public chartType: ChartType = 'bar';
       public barChartColors: any[] = [
         { backgroundColor: '#537953' }
-      ]
+      ];
 
   public chartClicked(e: any): void {
     console.log(e);
