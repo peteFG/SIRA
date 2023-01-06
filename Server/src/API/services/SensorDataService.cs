@@ -17,9 +17,8 @@ public class SensorDataService
         _allSensorDataPoints = sensorData;
     }
 
-    public ArrayList GetNotableDifferencesAndOvertakes()
+    public ArrayList GetNotableSpeedDifferences()
     {
-        List<SensorDataCoord> coordListHeight = new List<SensorDataCoord>();
         List<SensorDataCoord> coordListSpeed = new List<SensorDataCoord>();
         List<int> overtakeDistances = new List<int>();
         var returnList = new ArrayList();
@@ -36,24 +35,24 @@ public class SensorDataService
 
             CheckForDifferences(currentDataPoint, currentDataPoint.Speed, nextDataPoint.Speed, coordListSpeed,
                 Type.Speed);
-            CheckForDifferences(currentDataPoint, currentDataPoint.Altitude, nextDataPoint.Altitude, coordListHeight,
-                Type.Altitude);
-            CheckForOvertakes(currentDataPoint, nextDataPoint, overtakeDistances);
         }
 
+        //Take only 20 values that are closest to the average.
+        coordListSpeed = RemoveOutliers(coordListSpeed);
+        // Commented out for now:
         // For the mvp we take the first 20 elements of the lists
-        // afterwards, server side pagiation is needed
-
-        returnList.AddRange(coordListHeight.Take(20).ToList());
-        returnList.AddRange(coordListSpeed.Take(20).ToList());
+        // afterwards, server side pagination is needed
+        //returnList.AddRange(coordListSpeed.Take(20).ToList());
+        returnList.AddRange(coordListSpeed);
 
         var overTakeList = CategoriseOvertakes(overtakeDistances);
         returnList.AddRange(overTakeList);
         return returnList;
     }
 
+
     private static void CheckForDifferences(SensorData currentDataPoint, string currentValue, string nextValue,
-        List<SensorDataCoord> coordListHeight, Type type)
+        List<SensorDataCoord> coordList, Type type)
     {
         bool currentValueValid = double.TryParse(currentValue, NumberStyles.Any,
             CultureInfo.InvariantCulture, out var parsedCurrentValue);
@@ -64,14 +63,12 @@ public class SensorDataService
 
         var valueDifference = type switch
         {
-            Type.Altitude => Math.Abs(Math.Round((decimal)(parsedCurrentValue - parsedNextValue), 2)),
-            Type.Speed => Math.Round((decimal)(parsedCurrentValue - parsedNextValue), 2),
+            Type.Speed => Math.Round((decimal) (parsedCurrentValue - parsedNextValue), 2),
             _ => decimal.Zero
         };
-        if ((type == Type.Altitude && Math.Abs(valueDifference) > 1) 
-            || (type == Type.Speed && Math.Abs(valueDifference) > 3))
+        if (type == Type.Speed && Math.Abs(valueDifference) > 3)
         {
-            coordListHeight.Add(new SensorDataCoord
+            coordList.Add(new SensorDataCoord
             {
                 XCoord = currentDataPoint.XCoord,
                 YCoord = currentDataPoint.YCoord,
@@ -79,6 +76,44 @@ public class SensorDataService
                 Type = type
             });
         }
+    }
+
+    private static List<SensorDataCoord> RemoveOutliers(List<SensorDataCoord> coordList)
+    {
+        decimal coordDifferenceSum = 0;
+        foreach (var coord in coordList)
+        {
+            coordDifferenceSum += coord.Difference;
+        }
+
+        var averageDifference = coordDifferenceSum / coordList.Count;
+        coordList = coordList.OrderBy(coord => Math.Abs(averageDifference - coord.Difference)).Take(20).ToList();
+
+
+        return coordList;
+    }
+
+    public ArrayList GetOvertakes()
+    {
+        List<int> overtakeDistances = new List<int>();
+        var returnList = new ArrayList();
+
+        if (_allSensorDataPoints.IsNullOrEmpty())
+        {
+            return returnList;
+        }
+
+        for (int i = 0; i < _allSensorDataPoints.Count - 1; i += 2)
+        {
+            var currentDataPoint = _allSensorDataPoints[i];
+            var nextDataPoint = _allSensorDataPoints[i + 1];
+
+            CheckForOvertakes(currentDataPoint, nextDataPoint, overtakeDistances);
+        }
+
+        var overTakeList = CategoriseOvertakes(overtakeDistances);
+        returnList.AddRange(overTakeList);
+        return returnList;
     }
 
     private static void CheckForOvertakes(SensorData currentDataPoint, SensorData nextDataPoint,
@@ -101,6 +136,11 @@ public class SensorDataService
     private static List<OvertakingDistance> CategoriseOvertakes(List<int> overtakeDistances)
     {
         var overTakeList = new List<OvertakingDistance>();
+        if (overtakeDistances.IsNullOrEmpty())
+        {
+            return new List<OvertakingDistance>();
+        }
+
         for (int rangeFrom = 0; rangeFrom < overtakeDistances.Max(); rangeFrom += 5)
         {
             var rangeTo = rangeFrom + 5;
