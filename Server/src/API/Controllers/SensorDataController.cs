@@ -90,11 +90,11 @@ namespace API.Controllers
                         UploadTimeStamp = uploadTimeStamp,
                         RideId = rideId,
                         Date = record.Date,
-                        DistanceLeft = record.DistanceLeft, //.IsNullOrEmpty() ? 0 : int.Parse(record.DistanceLeft),
-                        DistanceRight = record.DistanceRight, //.IsNullOrEmpty() ? 0 : int.Parse(record.DistanceRight),
-                        Measurements = record.Measurements, //.IsNullOrEmpty() ? 0 : int.Parse(record.Measurements),
-                        Speed = record.Speed, //.IsNullOrEmpty() ? 0f : float.Parse(record.Speed),
-                        Altitude = record.Altitude, //.IsNullOrEmpty() ? 0f : float.Parse(record.Altitude),
+                        DistanceLeft = record.DistanceLeft,
+                        DistanceRight = record.DistanceRight,
+                        Measurements = record.Measurements,
+                        Speed = record.Speed,
+                        Altitude = record.Altitude,
                         Timestamp = record.Timestamp,
                         ButtonPressed = record.ButtonPressed,
                         XCoord = record.XCoord,
@@ -156,14 +156,23 @@ namespace API.Controllers
 
 
         /// <summary>
-        /// Gets all notable documented Height and Speed Differences.
-        /// Also gets all documented overtakes on the left side and categorizes them in steps of 5.
+        /// Gets 20 notable documented Speed Differences closest to the average.
         /// </summary>
-        [HttpGet("GetNotableDifferencesAndOvertakes")]
+        [HttpGet("GetNotableSpeedDifferences")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ArrayList))]
-        public Task<ActionResult<ArrayList>> GetNotableDifferencesAndOvertakes()
+        public Task<ActionResult<ArrayList>> GetNotableSpeedDifferences()
         {
-            return Task.FromResult<ActionResult<ArrayList>>(SensorDataService.Instance.GetNotableDifferencesAndOvertakes());
+            return Task.FromResult<ActionResult<ArrayList>>(SensorDataService.Instance.GetNotableSpeedDifferences());
+        }
+
+        /// <summary>
+        /// Gets all documented overtakes on the left side and categorizes them in steps of 5.
+        /// </summary>
+        [HttpGet("GetOvertakes")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ArrayList))]
+        public Task<ActionResult<ArrayList>> GetOvertakes()
+        {
+            return Task.FromResult<ActionResult<ArrayList>>(SensorDataService.Instance.GetOvertakes());
         }
     }
 }
