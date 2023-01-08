@@ -4,8 +4,7 @@ import { SensorDataService } from 'src/app/backend/sensor-data.service';
 @Component({
   selector: 'upload-data-page',
   templateUrl: './upload-data.page.html',
-  styleUrls: ['./upload-data.page.scss'],
-  providers: [SensorDataService]
+  styleUrls: ['./upload-data.page.scss']
 })
 export class UploadDataPage {
   public fileList: File[];

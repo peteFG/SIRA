@@ -42,6 +42,14 @@ ion-select::part(icon) {
   opacity: 1;
 }
 
+ion-checkbox {
+  --background: none;
+  --border-color: var(--main-color);
+  --border-color-checked: var(--main-color);
+  --background-checked: none;
+  --checkmark-color: var(--main-color);
+}
+
 .stats-container {
   display: flex;
   height: 100%;
@@ -51,4 +59,15 @@ ion-select::part(icon) {
 sira-map {
   height: 100%;
   width: 100%;
+}
+
+.map-sel-options-container {
+  display: flex;
+  margin-bottom: .5em;
+  flex-direction: column;
+  align-items: center;
+}
+
+.checkbox-item {
+  margin-right: .3em;
 }

@@ -5,21 +5,23 @@ import { OvertakingDistance, SensorDataCoord, SensorDataService } from 'src/app/
 @Component({
   selector: 'stats-page',
   templateUrl: './stats.page.html',
-  styleUrls: ['./stats.page.scss'],
-  providers: [SensorDataService]
+  styleUrls: ['./stats.page.scss']
 })
 export class StatsPage implements OnInit {
-  public selValue: string = "minOvertakingDistance";
+  public selValue: string = "dangerZones";
 
   public speedList: SensorDataCoord[] = [];
   public altitudeList: SensorDataCoord[] = [];
   public overtakingDistanceList: OvertakingDistance[] = [];
 
+  public isDangerZoneChecked: boolean = true;
+  public isSpeedChecked: boolean = true;
+
   constructor(private sensorDataService: SensorDataService) { 
     this.sensorDataService.loadSensorData();
-    this.sensorDataService.altitudeList.subscribe(list => this.altitudeList = list);
-    this.sensorDataService.speedList.subscribe(list => this.speedList = list);
-    this.sensorDataService.overtakingDistanceList.subscribe(list => this.overtakingDistanceList = list);
+    this.sensorDataService.altitudeList$.subscribe(list => this.altitudeList = list);
+    this.sensorDataService.speedList$.subscribe(list => this.speedList = list);
+    this.sensorDataService.overtakingDistanceList$.subscribe(list => this.overtakingDistanceList = list);
   }
 
   ngOnInit() {

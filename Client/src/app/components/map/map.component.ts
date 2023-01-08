@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { Feature, Map, Overlay } from 'ol';
 import { OSM, Vector, Vector as VectorSource } from 'ol/source.js';
@@ -18,6 +18,7 @@ import 'leaflet-routing-machine';
 import { Icon, Style } from 'ol/style';
 import VectorLayer from 'ol/layer/Vector';
 import Point from 'ol/geom/Point';
+import { SensorDataCoord, SensorDataService } from 'src/app/backend/sensor-data.service';
 
 export enum MapState {
   initial,
@@ -29,30 +30,47 @@ export enum MapState {
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
 })
-export class MapComponent implements OnInit, AfterViewInit {
+export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() public start: RouteMappingData;
   @Input() public end: RouteMappingData;
   @Input() public showButton: boolean = true;
+  @Input() public showSpeed: boolean = true;
+  @Input() public showDangerZones: boolean = true;
 
   public map: Map;
   public dangerZones: DangerZone[] = [];
+  public speedList: SensorDataCoord[] = [];
 
   public currentMapState: MapState = MapState.initial;
 
   constructor(
     private router: Router,
-    private dangerZonesService: DangerZonesService
+    private dangerZonesService: DangerZonesService,
+    private sensorDataService: SensorDataService
   ) {
     this.dangerZonesService.getDangerZones();
+    this.sensorDataService.loadSensorData();
     this.dangerZonesService.dangerZones$.subscribe(
       (zones) => (this.dangerZonesChanged(zones))
     );
+    this.sensorDataService.speedList$.subscribe(list => this.speedListChanged(list));
   }
 
   // Routing = https://www.liedman.net/leaflet-routing-machine/
   ngOnInit() {
     L.Icon.Default.imagePath = "assets/marker/";
    this.initializeMap();
+  }
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if((changes["showSpeed"] || changes["showDangerZones"]) && this.map) {
+      this.map.setLayers([
+        new TileLayer({
+          source: new OSM(),
+        }),
+      ])
+      this.renderMapWithInfo();
+  }
   }
 
   public ngAfterViewInit(): void {
@@ -105,39 +123,59 @@ export class MapComponent implements OnInit, AfterViewInit {
     });
     this.renderMap();
     if(this.dangerZones && this.dangerZones.length > 0 && this.map)
-      this.renderMapWithDangerZones();
+      this.renderMapWithInfo();
   }
     
   public dangerZonesChanged(zones: DangerZone[]): void {
     this.dangerZones = zones;
     if(this.dangerZones && this.dangerZones.length > 0 && this.map)
-      this.renderMapWithDangerZones();
+      this.renderMapWithInfo();
   }
 
-  private renderMapWithDangerZones() {
-    for(const zone of this.dangerZones) {
-      // const circleFeature = getCircleFeatureStyle([+zone.yCoord,+zone.xCoord]);
-      // this.map.addLayer(getVectorLayer(circleFeature));
-      this.map.addLayer(getMarkerLayer([+zone.yCoord,+zone.xCoord],[24,24], "alert-circle.png"));
+
+  public speedListChanged(list: SensorDataCoord[]) {
+    this.speedList = list;
+    if(this.speedList && this.speedList.length > 0 && this.map)
+    this.renderMapWithInfo();
+  }
+
+
+  private renderMapWithInfo() {
+    if(this.showDangerZones) {
+      for(const zone of this.dangerZones) {
+        this.map.addLayer(getMarkerLayer([+zone.yCoord,+zone.xCoord],[24,24], "alert-circle.png"));
+      }
     }
-    if(this.dangerZones.length > 0) {
+ 
+    if(this.showSpeed) {
+      const speedAvg = this.speedList ? this.speedList.reduce((a, b) => a + b.difference, 0) / this.speedList.length : 0;
+      for(const speed of this.speedList) {
+        this.map.addLayer(getMarkerLayer([+speed.yCoord,+speed.xCoord],[24,24], 
+          speed.difference < speedAvg ? "speed/speedometer_green.png" : "speed/speedometer_red.png"));
+  
+      }
+    }
+   
+    if((this.showDangerZones || this.showSpeed) && (this.dangerZones.length > 0 || this.speedList.length > 0)) {
       const container = document.getElementById('popup');
       const closer = document.getElementById('popup-closer');
-      closer.onclick = function () {
-        overlay.setPosition(undefined);
-        closer.blur();
-        return false;
-      };
-      const overlay = new Overlay({
-        element: container,
-        autoPan: {
-          animation: {
-            duration: 250,
+      if(closer && container) {
+        closer.onclick = function () {
+          overlay.setPosition(undefined);
+          closer.blur();
+          return false;
+        };
+        const overlay = new Overlay({
+          element: container,
+          autoPan: {
+            animation: {
+              duration: 250,
+            },
           },
-        },
-      });
-      this.map.addOverlay(overlay);
-      this.mapClickHandler(overlay);
+        });
+        this.map.addOverlay(overlay);
+        this.mapClickHandler(overlay);
+      }
     }
     this.renderMap();
   }
@@ -146,6 +184,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   private mapClickHandler(overlay: any) {
     const content = document.getElementById('popup-content');
     const zones = this.dangerZones;
+    const speedList = this.speedList;
     this.map.on('singleclick', function (evt) {
       const coordinate = evt.coordinate;
       let text = "";
@@ -154,12 +193,24 @@ export class MapComponent implements OnInit, AfterViewInit {
         const dist = fromLonLat([+zone.yCoord, +zone.xCoord]);
         const y = dist[0];
         const x = dist[1];
-        if(((y-30) < coordinate[0] && (y+30) > coordinate[0])
-        && ((x+40) > coordinate[1] && coordinate[1] > x)) {
+        if(((y-50) < coordinate[0] && (y+50) > coordinate[0])
+        && ((x+50) > coordinate[1] && (x-50) < coordinate[1])) {
           text = zone.toolTipText;
           break;
         }
       }
+
+      for(const speed of speedList) {
+        const dist = fromLonLat([+speed.yCoord, +speed.xCoord]);
+        const y = dist[0];
+        const x = dist[1];
+        if(((y-50) < coordinate[0] && (y+50) > coordinate[0])
+        && ((x+50) > coordinate[1] && (x-50) < coordinate[1])) {
+          text = "Geschwindigkeitsunterschied: "+speed.difference + " km/h";
+          break;
+        }
+      }
+      
       if(text) {
         content.innerHTML = '<div>'+text+'</div>';
         overlay.setPosition(coordinate);

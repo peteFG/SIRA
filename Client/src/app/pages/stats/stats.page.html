@@ -5,14 +5,29 @@
             <div class="select-outer-container">
                 <ion-select class="select-items" interface="action-sheet" placeholder="Visualisierung auswählen"
                     [value]="selValue" cancelText="Abbrechen" (ionChange)="onSelValueChanged($event)">
-                    <ion-select-option value="dangerZones">Gefahrenstelle</ion-select-option>
+                    <ion-select-option value="dangerZones">Gefahrenstellen</ion-select-option>
                     <ion-select-option value="overtakingDistance">Überholabstand innerorts</ion-select-option>
                     <ion-select-option value="minOvertakingDistance">Mindestüberholabstand</ion-select-option>
                     <ion-select-option value="speedDifferences">Auffällige
                         Geschwindigkeits-Änderungen</ion-select-option>
                 </ion-select>
             </div>
-            <sira-map *ngIf="selValue === 'dangerZones'" [showButton]="false"></sira-map>
+            <div *ngIf="selValue === 'dangerZones'" style="height: 100%; width: 100%;">
+                <div class="map-sel-options-container">
+                    <div style="margin-right: .2em;     display: flex;"> <ion-checkbox class="checkbox-item"
+                            [(ngModel)]="isDangerZoneChecked">
+                        </ion-checkbox>
+                        <ion-label>Gefahrenstellen</ion-label>
+                    </div>
+                    <div style="margin-left: .2em;     display: flex;"> <ion-checkbox class="checkbox-item"
+                            [(ngModel)]="isSpeedChecked">
+                        </ion-checkbox>
+                        <ion-label>Geschwindigkeitsunterschiede</ion-label>
+                    </div>
+                </div>
+                <sira-map [showButton]="false" [showSpeed]="isSpeedChecked"
+                    [showDangerZones]="isDangerZoneChecked"></sira-map>
+            </div>
             <stats-list *ngIf="selValue === 'speedDifferences'" [coordList]="speedList" [valueSuffix]="'km/h'"
                 [disclaimer]="'Disclaimer'"></stats-list>
             <stats-bar-diagram

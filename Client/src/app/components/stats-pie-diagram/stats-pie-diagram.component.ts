@@ -33,6 +33,7 @@ export class StatsPieDiagramComponent implements AfterViewInit{
     maintainAspectRatio: false,
     plugins: {
       legend: {
+        reverse: true,
         display: true,
         labels: {
             boxWidth: 25,
