@@ -8,7 +8,7 @@ import { OvertakingDistance, SensorDataCoord, SensorDataService } from 'src/app/
   styleUrls: ['./stats.page.scss']
 })
 export class StatsPage implements OnInit {
-  public selValue: string = "dangerZones";
+  public selValue: string = "minOvertakingDistance";
 
   public speedList: SensorDataCoord[] = [];
   public altitudeList: SensorDataCoord[] = [];

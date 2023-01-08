@@ -25,7 +25,7 @@ export class InfoOverviewComponent implements OnInit, OnChanges {
   public filterList(event) {
     const query = event.target.value.toLowerCase();
     this.filteredInfoList = this.infoList.filter(item => item.title.toLowerCase().includes(query)
-     || item.text.toLowerCase().includes(query));
+     || item.text?.toLowerCase().includes(query));
   }
 
   public onItemClicked(info: Info) {
