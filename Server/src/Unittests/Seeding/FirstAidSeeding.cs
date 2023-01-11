@@ -15,7 +15,6 @@ public class FirstAidSeeding : BaseUnitTests
         aid.Title = "112 anrufen";
         aid.Action = Action.EmergencyCall;
         aid.Icon = "phone-portrait-outline";
-
         Info returnval = await MongoUoW.Infos.InsertOneAsync(aid);
 
         Assert.NotNull(returnval);
@@ -35,7 +34,7 @@ public class FirstAidSeeding : BaseUnitTests
             + "Weist der Betroffene eine Verletzung im Bereich des Brustkorbs oder der Lunge auf, wird er auf die verletzte Seite gedreht, damit die dann oben liegende, unbeeinträchtigte Lungenhälfte sich während der Einatmung frei entfalten kann und eventuelle Blutungen abgedrückt werden.\n\n"
             + "Schwangere Frauen werden tendenziell auf der linken Seite gelagert, da so der gemeinsame Kreislauf von Mutter und Fötus am besten entlastet werden kann.";
         aid.Icon = "bag-add";
-
+aid.Source="stabileSeitenlage.jpg";
         Info returnval = await MongoUoW.Infos.InsertOneAsync(aid);
 
         Assert.NotNull(returnval);
@@ -55,7 +54,7 @@ public class FirstAidSeeding : BaseUnitTests
             + "Weist der Betroffene eine Verletzung im Bereich des Brustkorbs oder der Lunge auf, wird er auf die verletzte Seite gedreht, damit die dann oben liegende, unbeeinträchtigte Lungenhälfte sich während der Einatmung frei entfalten kann und eventuelle Blutungen abgedrückt werden.\n\n"
             + "Schwangere Frauen werden tendenziell auf der linken Seite gelagert, da so der gemeinsame Kreislauf von Mutter und Fötus am besten entlastet werden kann.";
         aid.Icon = "egg";
-
+aid.Source="blutendeWunde.PNG";
         Info returnval = await MongoUoW.Infos.InsertOneAsync(aid);
 
         Assert.NotNull(returnval);
@@ -75,6 +74,7 @@ public class FirstAidSeeding : BaseUnitTests
             + "Weist der Betroffene eine Verletzung im Bereich des Brustkorbs oder der Lunge auf, wird er auf die verletzte Seite gedreht, damit die dann oben liegende, unbeeinträchtigte Lungenhälfte sich während der Einatmung frei entfalten kann und eventuelle Blutungen abgedrückt werden.\n\n"
             + "Schwangere Frauen werden tendenziell auf der linken Seite gelagert, da so der gemeinsame Kreislauf von Mutter und Fötus am besten entlastet werden kann.";
         aid.Icon = "flame";
+        aid.Source ="brandwunde.jpg";
         Info returnval = await MongoUoW.Infos.InsertOneAsync(aid);
 
         Assert.NotNull(returnval);
@@ -94,6 +94,7 @@ public class FirstAidSeeding : BaseUnitTests
             + "Weist der Betroffene eine Verletzung im Bereich des Brustkorbs oder der Lunge auf, wird er auf die verletzte Seite gedreht, damit die dann oben liegende, unbeeinträchtigte Lungenhälfte sich während der Einatmung frei entfalten kann und eventuelle Blutungen abgedrückt werden.\n\n"
             + "Schwangere Frauen werden tendenziell auf der linken Seite gelagert, da so der gemeinsame Kreislauf von Mutter und Fötus am besten entlastet werden kann.";
         aid.Icon = "lock-closed";
+        aid.Source = "Unfallstelle.jpp";
         Info returnval = await MongoUoW.Infos.InsertOneAsync(aid);
 
         Assert.NotNull(returnval);

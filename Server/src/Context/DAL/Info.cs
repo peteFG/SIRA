@@ -21,6 +21,8 @@ public class Info : MongoDocument
     public string Text { get; set; }
 
     public string Icon { get; set; } = "document-text";
+
+    public string? Source { get; set; }
 }
 
 public enum Category

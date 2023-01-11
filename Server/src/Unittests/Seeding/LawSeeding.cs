@@ -26,7 +26,7 @@ public class LawSeeding : BaseUnitTests
             "Der gesetzlich definierte Überholabstand hebt die Verkehrssicherheit für alle und schafft " +
             "grundsätzlich klare Verhältnisse. \n\nDie 30 km/h-Ausnahme schwächt die Verbesserung " +
             "jedoch deutlich ab, zumal 30 km/h immer mehr zum üblichen Geschwindigkeitslimit innertorts wird.";
-
+        law.Source = "https://www.ris.bka.gv.at/Dokumente/BgblAuth/BGBLA_2022_I_122/BGBLA_2022_I_122.html";
         Info returnval = await MongoUoW.Infos.InsertOneAsync(law);
 
         Assert.NotNull(returnval);
@@ -53,7 +53,7 @@ public class LawSeeding : BaseUnitTests
             "In Belgien, Dänemark, Frankreich und der Schweiz hingegen ist kein Halt nötig, " +
             "die Weiterfahrt erfolgt nach dem „Vorrang geben“-Prinzip. \n\nEine Regelung wie " +
             "in diesen Staaten hätte deutlich mehr Komfort für Radfahrende geschafft.";
-
+law.Source = "https://www.ris.bka.gv.at/Dokumente/BgblAuth/BGBLA_2022_I_122/BGBLA_2022_I_122.html";
         Info returnval = await MongoUoW.Infos.InsertOneAsync(law);
 
         Assert.NotNull(returnval);
@@ -82,6 +82,7 @@ public class LawSeeding : BaseUnitTests
             "dabei einspurig sein und es darf niemand gefährdet werden, das " +
             "Verkehrsaufkommen muss dies zulassen und andere dürfen dadurch nicht am " +
             "Überholen gehindert werden.";
+            law.Source = "https://www.ris.bka.gv.at/Dokumente/BgblAuth/BGBLA_2022_I_122/BGBLA_2022_I_122.html";
         Info returnval = await MongoUoW.Infos.InsertOneAsync(law);
 
         Assert.NotNull(returnval);
@@ -106,7 +107,7 @@ public class LawSeeding : BaseUnitTests
             "ist eine grundsätzliche Neuregelung notwendig, die auch vom Kuratorium für " +
             "Verkehrssicherheit gefordert wird: Eine definierte Annäherungsgeschwindigkeit für " +
             "Kraftfahrzeuge vor ungeregelten Radfahrerüberfahrten, um ein sicheres Anhalten vor diesen Anlagen zu ermöglichen.";
-
+law.Source = "https://www.ris.bka.gv.at/Dokumente/BgblAuth/BGBLA_2022_I_122/BGBLA_2022_I_122.html";
         Info returnval = await MongoUoW.Infos.InsertOneAsync(law);
         Assert.NotNull(returnval);
     }
@@ -122,7 +123,7 @@ public class LawSeeding : BaseUnitTests
         law.Text = "Die Behörde kann zukünftig das Befahren von Radfahranlagen mit " +
                    "landwirtschaftlichen Fahrzeugen und außerorts auch mit S-Pedelecs " +
                    "(Klasse L1e) erlauben. \n\nDies ermöglicht die sogenannte \"Positivbeschilderung\", also z.B. Radweg statt Fahrverbot mit Ausnahmen.\n\n Auf Geh- und Radwegen dürfen Lenkende von Kraftfahrzeugen nur maximal 10 km/h fahren, wenn sie sich Fußgängern nähern.";
-
+law.Source = "https://www.ris.bka.gv.at/Dokumente/BgblAuth/BGBLA_2022_I_122/BGBLA_2022_I_122.html";
         Info returnval = await MongoUoW.Infos.InsertOneAsync(law);
         Assert.NotNull(returnval);
     }
@@ -138,6 +139,7 @@ public class LawSeeding : BaseUnitTests
         law.Text =
             "Um die Einführung von Fahrradstraßen zu erleichtern, kann die Behörde „bestimmen, dass die Fahrradstraße dauernd oder zu bestimmten Zeiten oder zu Zwecken der Durchfahrt“ mit Kfz befahren werden darf.\n\n Darin lag bisher oft ein amtlicher Hinderungsgrund zur Einrichtung von Fahrradstraßen." +
             "Hier orientiert sich die StVO-Novelle an der deutschen Rechtslage.\n\n Eine Regelung, die die vermehrte Umsetzung von Fahrradstraßen erhoffen lässt. Wir weisen bei jedem Anlass darauf hin, dass dadurch Verkehrsfilter zur Kfz-Beruhigung in Fahrradstraßen umso wichtiger werden.";
+       law.Source = "https://www.ris.bka.gv.at/Dokumente/BgblAuth/BGBLA_2022_I_122/BGBLA_2022_I_122.html";
         Info returnval = await MongoUoW.Infos.InsertOneAsync(law);
         Assert.NotNull(returnval);
     }
@@ -152,6 +154,7 @@ public class LawSeeding : BaseUnitTests
         law.Title = "Reißverschlussprinzip statt Sondernachrang";
         law.Text =
             "Nach der Einführung des Reißverschlussprinzips für Radfahrstreifen analog zu normalen Fahrstreifen im Zuge der letzten Novelle: \nDies gilt zukünftig innerorts auch für parallel einmündende Radfahrende, die einen Radweg verlassen.";
+        law.Source = "https://www.ris.bka.gv.at/Dokumente/BgblAuth/BGBLA_2022_I_122/BGBLA_2022_I_122.html";
         Info returnval = await MongoUoW.Infos.InsertOneAsync(law);
         Assert.NotNull(returnval);
     }
@@ -167,6 +170,7 @@ public class LawSeeding : BaseUnitTests
         law.Text =
             "Das Mehrfachstrafen durch Aufsummieren einzelner fehlender Reflektoren wird behoben. \n\nZukünftig ist sind auch mehrere Ausstattungsmängel aus dem § 1 Abs. 1 der Fahrradverordnung als eine Verwaltungsübertretung gewertet.";
 
+        law.Source = "https://www.ris.bka.gv.at/Dokumente/BgblAuth/BGBLA_2022_I_122/BGBLA_2022_I_122.html";
         Info returnval = await MongoUoW.Infos.InsertOneAsync(law);
         Assert.NotNull(returnval);
     }
@@ -183,6 +187,7 @@ public class LawSeeding : BaseUnitTests
             "Das Verparken von Radinfrastruktur ist insbesondere in Städten ein großes Problem. Bisher ist  das Überragen von Bodenmarkierungen nach § 9 Abs. 7 untersagt, ein ähnliches Verbot gilt zukünftig für das Hineinragen von Kfz in Radwege und Gehwege (bei Gehwegen ausg. geringfügiges Überragen durch Seitenspiegel oder Stoßstange).\n\n" +
             "Für Ladetätigkeiten für bis zu 10 Minuten dürfen Gehsteige bis auf 1,5 m verengt werden. Bei Einbauten & Gegenständen sind zukünftig dauerhaft 1,5 m frei zu halten, mit temporären Ausnahmen bei Bauarbeiten o.ä.";
 
+        law.Source = "https://www.ris.bka.gv.at/Dokumente/BgblAuth/BGBLA_2022_I_122/BGBLA_2022_I_122.html";
         Info returnval = await MongoUoW.Infos.InsertOneAsync(law);
         Assert.NotNull(returnval);
     }
