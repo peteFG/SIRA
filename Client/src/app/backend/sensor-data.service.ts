@@ -42,7 +42,7 @@ export class SensorDataService {
   public loadSensorDataRange() {
     this.backendService.sensorData('LoadAllSensorDataPoints').then(() => {
       this.backendService.sensorData('GetMinimumAndMaximumDate').then((res) => {
-        console.log('### ', res);
+        this.dateRange.next([new Date(res[0]), new Date(res[1])]);
       });
     });
   }
