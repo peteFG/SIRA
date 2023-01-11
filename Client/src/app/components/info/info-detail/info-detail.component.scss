@@ -5,13 +5,18 @@
     align-content: flex-start;
 }
 
-.info-text-container {
+.info-text-outer-container {
     padding: .8em;
-    white-space: pre-line;
     overflow: auto;
-    max-height: calc(100% - 60px);
+    max-height: calc(100% - 80px);
     width: 100%;
+}
+
+.info-text-container {
+    white-space: pre-line;
     text-align: justify;
+    height: 100%;
+    overflow: auto;
 }
 
 .info-text-container-report {
@@ -29,11 +34,26 @@ ion-searchbar {
 }
 
 .accident-report-button {
-    width: 100%;
+    width: 80%;
     display: flex;
     justify-content: center;
 }
 .info-text-title-container {
     font-weight: 700;
     padding: .8em;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.button-outer-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+}
+
+.first-aid-image {
+    margin-top: 1em;
+    max-height: 300px;
 }

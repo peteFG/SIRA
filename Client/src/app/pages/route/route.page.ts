@@ -16,5 +16,6 @@ export class RoutePage implements OnInit {
 
   public coordValues = mapValues;
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 }

@@ -7,12 +7,23 @@
         <br><br>Sicheres Radfahren - <br>sicheres Radfahren in Graz - <br>sicher für alle<br><br>
         Uni-Projekt - FH-Joanneum <br>- Informationen zum Projekt<br><br>
         Kontaktdaten:<br>
-        email@email.com<br>
-        email@andere.com<br>
-        hallo@hallo.com</span>
-      <div class="sira-info-logo-container" (click)="onNavigateToUploadDataPage()">
-        <img alt="SIRA Logo" src="../../../assets/icon/logo_white.svg" />
-      </div>
+        office@sira.at<br>
+        support@sira.at</span>
+      <div style="margin-top: 2em">
+        In Kooperation mit der Radlobby Graz <br>
+        <div (click)="onNavigateToUploadDataPage()">
+        <img style="height: 100px; margin-top: .5em" alt="SIRA Logo" src="../../../assets/radlobby_logo.png" />
+    </div>
+    <div style="margin-top: 1em;">
+        S&auml;mtliche Datensätze <br>wurden in Graz gesammelt.
+    </div>
+    <div style="margin-top: 1em;">
+        Die Datens&auml;tze stammen <br>
+        aus dem Zeitraum: <br>
+        {{dataStart | date:'M.yyyy'}} - {{dataEnd | date:'M.yyyy'}}
+    </div>
+
+    </div>
     </div>
   </div>
 </ion-content>

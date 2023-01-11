@@ -1,58 +1,89 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { Feature, Map, Overlay } from 'ol';
 import { OSM, Vector, Vector as VectorSource } from 'ol/source.js';
 import View from 'ol/View.js';
 import TileLayer from 'ol/layer/Tile.js';
-import { toLonLat } from 'ol/proj.js';
 import {
   DangerZone,
   DangerZonesService,
 } from 'src/app/backend/danger-zones.service';
 import { RouteMappingData } from 'src/app/pages/route/route.testdata';
-import { toStringHDMS } from 'ol/coordinate';
-import {fromLonLat} from 'ol/proj.js';
-import { defaultCircleRadius, getCircleFeatureStyle, getMarkerLayer, getVectorLayer } from './map-helper';
+import { fromLonLat } from 'ol/proj.js';
+import { getMarkerLayer } from './map-helper';
 import * as L from 'leaflet';
 import 'leaflet-routing-machine';
-import { Icon, Style } from 'ol/style';
-import VectorLayer from 'ol/layer/Vector';
-import Point from 'ol/geom/Point';
+import {
+  SensorDataCoord,
+  SensorDataService,
+} from 'src/app/backend/sensor-data.service';
+import { InfoService } from 'src/app/backend/info.service';
 
 export enum MapState {
   initial,
   running,
-  end
+  end,
 }
 @Component({
   selector: 'sira-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
 })
-export class MapComponent implements OnInit, AfterViewInit {
+export class MapComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() public start: RouteMappingData;
   @Input() public end: RouteMappingData;
   @Input() public showButton: boolean = true;
+  @Input() public showSpeed: boolean = true;
+  @Input() public showDangerZones: boolean = true;
 
   public map: Map;
   public dangerZones: DangerZone[] = [];
+  public speedList: SensorDataCoord[] = [];
+  private paragraphCoordinates: { [key: string]: number[] } = {
+    '§ 67. Fahrradstraße': [15.421096501565376, 47.0437646351746],
+    '§ 68. Fahrradverkehr': [15.45038882824325, 47.07617469261417],
+  };
 
   public currentMapState: MapState = MapState.initial;
 
   constructor(
     private router: Router,
-    private dangerZonesService: DangerZonesService
+    private dangerZonesService: DangerZonesService,
+    private sensorDataService: SensorDataService,
+    private infoService: InfoService
   ) {
     this.dangerZonesService.getDangerZones();
-    this.dangerZonesService.dangerZones$.subscribe(
-      (zones) => (this.dangerZonesChanged(zones))
+    this.sensorDataService.loadSensorData();
+    this.dangerZonesService.dangerZones$.subscribe((zones) =>
+      this.dangerZonesChanged(zones)
+    );
+    this.sensorDataService.speedList$.subscribe((list) =>
+      this.speedListChanged(list)
     );
   }
 
   // Routing = https://www.liedman.net/leaflet-routing-machine/
   ngOnInit() {
-    L.Icon.Default.imagePath = "assets/marker/";
-   this.initializeMap();
+    L.Icon.Default.imagePath = 'assets/marker/';
+    this.initializeMap();
+  }
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if ((changes['showSpeed'] || changes['showDangerZones']) && this.map) {
+      this.map.setLayers([
+        new TileLayer({
+          source: new OSM(),
+        }),
+      ]);
+      this.renderMapWithInfo();
+    }
   }
 
   public ngAfterViewInit(): void {
@@ -65,28 +96,43 @@ export class MapComponent implements OnInit, AfterViewInit {
     //   ],
     //   show: false
     // }).addTo(map);
-  //   L.Routing.control({
-  //     router: L.Routing.osrmv1({
-  //         serviceUrl: `http://router.project-osrm.org/route/v1/`
-  //     }),
-  //     showAlternatives: true,
-  //     fitSelectedRoutes: false,
-  //     show: false,
-  //     routeWhileDragging: true,
-  //     waypoints: [
-  //         L.latLng(47.0729529, 15.4350478),
-  //         L.latLng(47.0678426, 15.4356588)
-  //     ]
-  // }).addTo(map);
-    this.addMarkers();
+    //   L.Routing.control({
+    //     router: L.Routing.osrmv1({
+    //         serviceUrl: `http://router.project-osrm.org/route/v1/`
+    //     }),
+    //     showAlternatives: true,
+    //     fitSelectedRoutes: false,
+    //     show: false,
+    //     routeWhileDragging: true,
+    //     waypoints: [
+    //         L.latLng(47.0729529, 15.4350478),
+    //         L.latLng(47.0678426, 15.4356588)
+    //     ]
+    // }).addTo(map);
+    this.addStartAndEndMarkers();
   }
 
-
-  private addMarkers() {
-    if(this.start)
-      this.map.addLayer(getMarkerLayer([+this.start.yCoord, +this.start.xCoord], [48,48]));
-    if(this.end)
-      this.map.addLayer(getMarkerLayer([+this.end.yCoord, +this.end.xCoord],[48,48], "map-marker-check.png"));
+  private addStartAndEndMarkers() {
+    if (this.start)
+      this.map.addLayer(
+        getMarkerLayer(
+          [+this.start.yCoord, +this.start.xCoord],
+          [48, 48],
+          'map-marker.png',
+          null,
+          'marker'
+        )
+      );
+    if (this.end)
+      this.map.addLayer(
+        getMarkerLayer(
+          [+this.end.yCoord, +this.end.xCoord],
+          [48, 48],
+          'map-marker-check.png',
+          null,
+          'marker'
+        )
+      );
   }
 
   private initializeMap() {
@@ -104,67 +150,135 @@ export class MapComponent implements OnInit, AfterViewInit {
       view,
     });
     this.renderMap();
-    if(this.dangerZones && this.dangerZones.length > 0 && this.map)
-      this.renderMapWithDangerZones();
-  }
-    
-  public dangerZonesChanged(zones: DangerZone[]): void {
-    this.dangerZones = zones;
-    if(this.dangerZones && this.dangerZones.length > 0 && this.map)
-      this.renderMapWithDangerZones();
+    if (this.dangerZones && this.dangerZones.length > 0 && this.map)
+      this.renderMapWithInfo();
   }
 
-  private renderMapWithDangerZones() {
-    for(const zone of this.dangerZones) {
-      // const circleFeature = getCircleFeatureStyle([+zone.yCoord,+zone.xCoord]);
-      // this.map.addLayer(getVectorLayer(circleFeature));
-      this.map.addLayer(getMarkerLayer([+zone.yCoord,+zone.xCoord],[24,24], "alert-circle.png"));
+  public dangerZonesChanged(zones: DangerZone[]): void {
+    this.dangerZones = zones;
+    if (this.dangerZones && this.dangerZones.length > 0 && this.map)
+      this.renderMapWithInfo();
+  }
+
+  public speedListChanged(list: SensorDataCoord[]) {
+    this.speedList = list;
+    if (this.speedList && this.speedList.length > 0 && this.map)
+      this.renderMapWithInfo();
+  }
+
+  private addStaticMarkers() {
+    for (const item of Object.keys(this.paragraphCoordinates)) {
+      this.map.addLayer(
+        getMarkerLayer(
+          this.paragraphCoordinates[item],
+          [24, 24],
+          'paragraph.png',
+          JSON.stringify({ text: item }),
+          'paragraph'
+        )
+      );
     }
-    if(this.dangerZones.length > 0) {
+  }
+
+  private renderMapWithInfo() {
+    this.addStaticMarkers();
+    if (this.showDangerZones) {
+      for (const zone of this.dangerZones) {
+        this.map.addLayer(
+          getMarkerLayer(
+            [+zone.yCoord, +zone.xCoord],
+            [24, 24],
+            'alert-circle.png',
+            JSON.stringify(zone),
+            'dangerZone'
+          )
+        );
+      }
+    }
+    if (this.showSpeed) {
+      const speedAvg = this.speedList
+        ? this.speedList.reduce((a, b) => a + b.difference, 0) /
+          this.speedList.length
+        : 0;
+      for (const speed of this.speedList) {
+        this.map.addLayer(
+          getMarkerLayer(
+            [+speed.yCoord, +speed.xCoord],
+            [24, 24],
+            speed.difference < speedAvg
+              ? 'speed/speedometer_green.png'
+              : 'speed/speedometer_red.png',
+            JSON.stringify(speed),
+            'speed'
+          )
+        );
+      }
+    }
+
+    if (
+      (this.showDangerZones || this.showSpeed) &&
+      (this.dangerZones.length > 0 || this.speedList.length > 0)
+    ) {
       const container = document.getElementById('popup');
       const closer = document.getElementById('popup-closer');
-      closer.onclick = function () {
-        overlay.setPosition(undefined);
-        closer.blur();
-        return false;
-      };
-      const overlay = new Overlay({
-        element: container,
-        autoPan: {
-          animation: {
-            duration: 250,
+      if (closer && container) {
+        closer.onclick = function () {
+          overlay.setPosition(undefined);
+          closer.blur();
+          return false;
+        };
+        const overlay = new Overlay({
+          element: container,
+          autoPan: {
+            animation: {
+              duration: 250,
+            },
           },
-        },
-      });
-      this.map.addOverlay(overlay);
-      this.mapClickHandler(overlay);
+        });
+        this.map.addOverlay(overlay);
+        this.mapClickHandler(overlay);
+      }
     }
     this.renderMap();
   }
 
-
   private mapClickHandler(overlay: any) {
     const content = document.getElementById('popup-content');
-    const zones = this.dangerZones;
-    this.map.on('singleclick', function (evt) {
-      const coordinate = evt.coordinate;
-      let text = "";
-      for(const zone of zones) {
-        // Check if click is in one danger zone
-        const dist = fromLonLat([+zone.yCoord, +zone.xCoord]);
-        const y = dist[0];
-        const x = dist[1];
-        if(((y-30) < coordinate[0] && (y+30) > coordinate[0])
-        && ((x+40) > coordinate[1] && coordinate[1] > x)) {
-          text = zone.toolTipText;
-          break;
+    const mapInst = this.map;
+    const infoS = this.infoService;
+    this.map.on('singleclick', function (event) {
+      const feature = mapInst.forEachFeatureAtPixel(
+        event.pixel,
+        function (feat, layer) {
+          const customProps = feat.get('id_');
+          const type = customProps['type'];
+          const object = JSON.parse(customProps['objectJson']);
+
+          let innerHtmlTooltipContent = '';
+          let htmlTooltipContent = '';
+          if (type === 'dangerZone') {
+            if (object.toolTipText.toLowerCase().startsWith('lagergasse')) {
+              htmlTooltipContent =
+                "<div style='width: 200px'><img alt='Lagergasse' " +
+                "src='../../../assets/dangerZones/Hergottwiesgasse.png' style='height: 100px; width: 200px;'/></div>";
+            } else {
+              innerHtmlTooltipContent = object.toolTipText;
+            }
+          } else if (type === 'paragraph') {
+            infoS.setCurrentInfoFromMap(object.text);
+          }
+          if (type !== 'paragraph') {
+            if (htmlTooltipContent) {
+              content.innerHTML = htmlTooltipContent;
+              overlay.setPosition(event.coordinate);
+            } else if (innerHtmlTooltipContent) {
+              content.innerHTML = '<div>' + innerHtmlTooltipContent + '</div>';
+              overlay.setPosition(event.coordinate);
+            }
+          }
+          return feat;
         }
-      }
-      if(text) {
-        content.innerHTML = '<div>'+text+'</div>';
-        overlay.setPosition(coordinate);
-      }
-      
+      );
     });
   }
 
@@ -173,9 +287,9 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   public onMapButtonClicked() {
-    if(this.currentMapState === MapState.initial)
+    if (this.currentMapState === MapState.initial)
       this.currentMapState = MapState.end;
-    else if(this.currentMapState === MapState.end) {
+    else if (this.currentMapState === MapState.end) {
       this.router.navigate(['/route-data']);
     }
   }

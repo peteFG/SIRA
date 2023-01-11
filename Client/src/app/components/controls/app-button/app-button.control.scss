@@ -1,9 +1,11 @@
 .app-button {
-    background-color: #537953;
+    background-color: var(--main-color);
     padding: 0.8em;
     border-radius: 10px;
     display: flex;
     align-items: center;
+    width: 100%;
+    justify-content: center;
 }
 
 .arrow-button-icon {

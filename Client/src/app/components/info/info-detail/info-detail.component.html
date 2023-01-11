@@ -1,9 +1,28 @@
 <div class="full-size-container info-outer-container">
     <ion-searchbar (ionChange)="onFilterText($event)" placeholder="Suche ..."></ion-searchbar>
-    <div class="info-text-title-container">{{filteredInfo?.title}}</div>
-    <div class="info-text-container" [class.info-text-container-report]="filteredInfo?.action === 'AccidentReport'"
+    <div class="info-text-title-container">
+        <div>{{filteredInfo?.title}}</div>
+        <div *ngIf="info.category === 'Law' && info.source"
+        style="width: 20px; height: 20px;">
+        <a [href]="info.source" target="_blank">
+            <img  alt="Link to Law" src="../../../../assets/open-in-new.png"/>
+        </a>
+        </div>
+    </div>
+    <div class="info-text-outer-container">
+        <div class="info-text-container" [class.info-text-container-report]="filteredInfo?.action === 'AccidentReport'"
         [innerHtml]="filteredInfo?.text | highlighter:filterText:'partial'">
     </div>
-    <app-button class="accident-report-button" *ngIf="filteredInfo?.action === 'AccidentReport'"
+    <div *ngIf="info.category === 'FirstAid' && info.source" style="display: flex; justify-content: center;">
+        <img class="first-aid-image" 
+        alt="first aid image" [src]="'../../../../assets/first-aid/'+info.source"/>
+    </div>
+
+  
+    </div>
+   
+    <div class="button-outer-container">
+        <app-button class="accident-report-button" *ngIf="filteredInfo?.action === 'AccidentReport'"
         [text]="'PDF Vorlage Download'" (onClick)="onAccidentReportClicked()"></app-button>
+    </div>
 </div>

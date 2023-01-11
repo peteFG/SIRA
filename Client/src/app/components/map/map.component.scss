@@ -43,7 +43,7 @@
 .ol-popup-closer {
     text-decoration: none;
     position: absolute;
-    background-color: #537953;
+    background-color: var(--main-color);
     padding: 0.2em 0.4em;
     top: 0;
     right: 0;
@@ -70,5 +70,5 @@
 .map-button-icon {
     height: 100%;
     width: 100%;
-    color: #ef2727;
+    color: #d91811;
 }

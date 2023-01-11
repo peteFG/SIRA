@@ -108,7 +108,7 @@ aid.Source="blutendeWunde.PNG";
 
         aid.Category = Category.FirstAid;
         aid.Title = "Unfallbericht";
-        aid.Text = "Das musst du beim Unfallbericht wissen\n\n\n\n"
+        aid.Text = "Das musst du beim Unfallbericht wissen\n\n"
             + "<ul><li>Personendaten</li>\n\n"
             + "<li>Fahrzeugdaten von allen Beteiligten</li>\n\n"
             + "<li>Versicherungsnummer</li>\n\n"

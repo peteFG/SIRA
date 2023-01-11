@@ -7,23 +7,25 @@ import { Info, InfoService } from 'src/app/backend/info.service';
   selector: 'info-detail',
   templateUrl: './info-detail.component.html',
   styleUrls: ['./info-detail.component.scss'],
-  providers: [CommonFileService]
+  providers: [CommonFileService],
 })
 export class InfoDetailComponent implements OnInit {
   public info: Info;
   public filteredInfo: Info;
   public filterText: string;
-  constructor(public router: Router, public infoService: InfoService,
-    private commonFileService: CommonFileService) {
-    this.infoService.currentInfo$.subscribe(inf => {
+  constructor(
+    public router: Router,
+    public infoService: InfoService,
+    private commonFileService: CommonFileService
+  ) {
+    this.infoService.currentInfo$.subscribe((inf) => {
       this.info = inf;
+      console.log('### ', this.info);
       this.filteredInfo = inf;
-    }
-    );
+    });
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   public onFilterText(event) {
     this.filterText = event.target.value;
