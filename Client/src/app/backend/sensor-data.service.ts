@@ -26,6 +26,9 @@ export class SensorDataService {
   private altitudeList = new BehaviorSubject<SensorDataCoord[]>([]);
   public altitudeList$ = this.altitudeList.asObservable();
 
+  private dateRange = new BehaviorSubject<Date[]>([]);
+  public dateRange$ = this.dateRange.asObservable();
+
   private overtakingDistanceList = new BehaviorSubject<OvertakingDistance[]>(
     []
   );
@@ -34,6 +37,14 @@ export class SensorDataService {
 
   public uploadFile(formData: FormData) {
     return this.backendService.uploadSensorData(formData);
+  }
+
+  public loadSensorDataRange() {
+    this.backendService.sensorData('LoadAllSensorDataPoints').then(() => {
+      this.backendService.sensorData('GetMinimumAndMaximumDate').then((res) => {
+        console.log('### ', res);
+      });
+    });
   }
 
   public loadSensorData() {
