@@ -191,4 +191,103 @@ law.Source = "https://www.ris.bka.gv.at/Dokumente/BgblAuth/BGBLA_2022_I_122/BGBL
         Info returnval = await MongoUoW.Infos.InsertOneAsync(law);
         Assert.NotNull(returnval);
     }
+
+    [Test]
+    public async Task CreateLaw10()
+    {
+        Info law = new Info();
+
+        law.Category = Category.Law;
+        law.Section = "StVO VI. Abschnitt (Besondere Vorschriften für den Verkehr mit Fahrrädern und Motorfahrrädern)";
+        law.Title = "§ 65. Benützung von Fahrrädern";
+        law.Text = "(1) Der Lenker eines Fahrrades (Radfahrer) muß mindestens zwölf Jahre alt sein; wer ein Fahrrad schiebt, gilt nicht als Radfahrer. Kinder unter zwölf Jahren dürfen ein Fahrrad nur unter Aufsicht einer Person, die das 16. Lebensjahr vollendet hat, oder mit behördlicher Bewilligung lenken.\n"+
+        "(2) Die Behörde hat auf Antrag des gesetzlichen Vertreters des Kindes die Bewilligung nach Abs. 1 zu erteilen, wenn das Kind\n"+
+        "1. das 9. Lebensjahr vollendet hat und die 4. Schulstufe besucht oder\n"+
+        "2. das 10. Lebensjahr vollendet hat"+
+        "und anzunehmen ist, dass es die erforderliche körperliche und geistige Eignung sowie Kenntnisse der straßenpolizeilichen Vorschriften besitzt. Die Bewilligung gilt für das ganze Bundesgebiet, sofern nicht der gesetzliche Vertreter des Kindes eine örtlich eingeschränkte Geltung beantragt hat. Sie ist unter Bedingungen und mit Auflagen zu erteilen, wenn dies die Verkehrssicherheit erfordert. Die Behörde kann die Bewilligung widerrufen, wenn sich die Verkehrsverhältnisse seit der Erteilung geändert haben oder nachträglich zutage tritt, daß das Kind die erforderliche körperliche oder geistige Eignung nicht besitzt. Über die von ihr erteilte Bewilligung hat die Behörde eine Bestätigung, den Radfahrausweis, auszustellen. Inhalt und Form des Radfahrausweises hat der Bundesminister für Verkehr, Innovation und Technologie durch Verordnung zu bestimmen. Der auf Grund dieser Bestimmung gestellte Antrag, die erteilte Bewilligung und der ausgestellte Radfahrausweis sind von Bundesstempelgebühren befreit.\n"+
+        "(3) Radfahrer, die auf dem Fahrrad Personen mitführen, müssen das 16. Lebensjahr vollendet haben. Ist die mitgeführte Person noch nicht acht Jahre alt, so muß für sie ein eigener, der Größe des Kindes entsprechender Sitz vorhanden sein. Ist die mitgeführte Person mehr als acht Jahre alt, so darf nur ein Fahrrad verwendet werden, das hinsichtlich seiner Bauart den Anforderungen der Produktsicherheitsbestimmungen für Fahrräder zum Transport mehrerer Personen (§ 104 Abs. 8) entspricht.";
+        law.Source = "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10011336";
+        Info returnval = await MongoUoW.Infos.InsertOneAsync(law);
+        Assert.NotNull(returnval);
+    }
+
+    [Test]
+    public async Task CreateLaw11()
+    {
+        Info law = new Info();
+
+        law.Category = Category.Law;
+        law.Section = "StVO VI. Abschnitt (Besondere Vorschriften für den Verkehr mit Fahrrädern und Motorfahrrädern)";
+        law.Title = "§ 66. Beschaffenheit von Fahrrädern, Fahrradanhängern und Kindersitzen";
+        law.Text = "(1) Fahrräder müssen der Größe des Benützers entsprechen. Fahrräder, Fahrradanhänger und Kindersitze müssen in einem Zustand erhalten werden, der den Anforderungen der Produktsicherheitsbestimmungen für Fahrräder (§ 104 Abs. 8) entspricht.\n"+
+        "(2) Der Bundesminister für Verkehr, Innovation und Technologie hat unter Bedachtnahme auf die Verkehrssicherheit und den Stand der Technik durch Verordnung festzulegen:\n"+
+        "1. unter welchen Voraussetzungen bestimmte Teile der Ausrüstung von Fahrrädern oder Fahrradanhängern entfallen können;\n"+
+        "2. unter welchen Voraussetzungen die Beförderung von Kindern in Kindersitzen oder Personen mit Fahrradanhängern und mehrspurigen Fahrrädern zulässig ist;\n"+
+        "3. das Ladegewicht, das bei der Beförderung von Lasten oder Personen mit Fahrrädern oder mit Fahrradanhängern nicht überschritten werden darf.";
+        law.Source = "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10011336";
+        Info returnval = await MongoUoW.Infos.InsertOneAsync(law);
+        Assert.NotNull(returnval);
+    }
+
+    [Test]
+    public async Task CreateLaw12()
+    {
+        Info law = new Info();
+
+        law.Category = Category.Law;
+        law.Section = "StVO VI. Abschnitt (Besondere Vorschriften für den Verkehr mit Fahrrädern und Motorfahrrädern)";
+        law.Title = "§ 67. Fahrradstraße";
+        law.Text = "(1) Die Behörde kann, wenn es der Sicherheit, Leichtigkeit oder Flüssigkeit des Verkehrs, insbesondere des Fahrradverkehrs, oder der Entflechtung des Verkehrs dient oder aufgrund der Lage, Widmung oder Beschaffenheit eines Gebäudes oder Gebietes im öffentlichen Interesse gelegen ist, durch Verordnung Straßen oder Straßenabschnitte dauernd oder zeitweilig zu Fahrradstraßen erklären. In einer solchen Fahrradstraße ist außer dem Fahrradverkehr jeder Fahrzeugverkehr verboten; ausgenommen davon ist das Befahren mit den in § 76a Abs. 5 genannten Fahrzeugen sowie das Befahren zum Zweck des Zu- und Abfahrens.\n"+
+        "(2) Die Behörde kann in der Verordnung nach Abs. 1 nach Maßgabe der Erfordernisse und unter Bedachtnahme auf die örtlichen Gegebenheiten bestimmen, dass die Fahrradstraße auch mit anderen als den in Abs. 1 genannten Fahrzeugen dauernd oder zu bestimmten Zeiten oder zu Zwecken der Durchfahrt befahren werden darf; das Queren von Fahrradstraßen ist jedenfalls erlaubt.\n"+
+        "(3) Die Lenker von Fahrzeugen dürfen in Fahrradstraßen nicht schneller als 30 km/h fahren. Radfahrer dürfen weder gefährdet noch behindert werden."+
+        "(4) Für die Kundmachung einer Verordnung nach Abs. 1 gelten die Bestimmungen des § 44 Abs. 1 mit der Maßgabe, dass am Anfang und am Ende einer Fahrradstraße die betreffenden Hinweiszeichen (§ 53 Abs. 1 Z 26 und 29) anzubringen sind.";
+        law.Source = "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10011336";
+        Info returnval = await MongoUoW.Infos.InsertOneAsync(law);
+        Assert.NotNull(returnval);
+    }
+
+    [Test]
+    public async Task CreateLaw13()
+    {
+        Info law = new Info();
+
+        law.Category = Category.Law;
+        law.Section = "StVO VI. Abschnitt (Besondere Vorschriften für den Verkehr mit Fahrrädern und Motorfahrrädern)";
+        law.Title = "§ 68. Fahrradverkehr";
+        law.Text = "(1) Auf Straßen mit einer Radfahranlage ist mit einspurigen Fahrrädern ohne Anhänger die Radfahranlage zu benützen, wenn der Abstand der Naben des Vorderrades und des Hinterrades nicht mehr als 1,7 m beträgt und das Befahren der Radfahranlage in der vom Radfahrer beabsichtigten Fahrtrichtung gemäß § 8a erlaubt ist. Mit Fahrrädern mit einem Anhänger, der nicht breiter als 100 cm ist, mit mehrspurigen Fahrrädern, die nicht breiter als 100 cm sind, sowie bei Trainingsfahrten mit Rennfahrrädern darf die Radfahranlage benützt werden; mit Fahrrädern mit einem sonstigen Anhänger oder mit sonstigen mehrspurigen Fahrrädern ist die für den übrigen Verkehr bestimmte Fahrbahn zu benützen. Auf Gehsteigen und Gehwegen ist das Radfahren in Längsrichtung verboten. Auf Geh- und Radwegen haben sich Radfahrer so zu verhalten, dass Fußgänger nicht gefährdet werden.\n"+
+        "(1a) Wenn es der Leichtigkeit und Flüssigkeit des Fahrradverkehrs dient und aus Gründen der Leichtigkeit und Flüssigkeit des übrigen Verkehrs sowie der Verkehrssicherheit keine Bedenken dagegen bestehen, kann die Behörde bestimmen, dass abweichend von Abs. 1 von Radfahrern mit einspurigen Fahrrädern ohne Anhänger ein Radweg oder ein Geh- und Radweg benützt werden darf, aber nicht muss. Derartige Radwege oder Geh- und Radwege sind mit den Zeichen gemäß § 53 Abs. 1 Z 27 bis 29 anzuzeigen.\n"+
+        "(2) Radfahrer dürfen auf Radwegen, in Fahrradstraßen, in Wohnstraßen und in Begegnungszonen neben einem anderen Radfahrer fahren sowie bei Trainingsfahrten mit Rennfahrrädern nebeneinander fahren. In Fußgängerzonen dürfen Radfahrer neben einem anderen Radfahrer fahren, wenn das Befahren der Fußgängerzone mit Fahrrädern erlaubt ist. Auf allen sonstigen Radfahranlagen und auf Fahrbahnen, auf denen eine Höchstgeschwindigkeit von höchstens 30 km/h und Fahrradverkehr erlaubt sind, ausgenommen auf Schienenstraßen, Vorrangstraßen und Einbahnstraßen gegen die Fahrtrichtung, darf mit einem einspurigen Fahrrad neben einem anderen Radfahrer gefahren werden, sofern niemand gefährdet wird, das Verkehrsaufkommen es zulässt und andere Verkehrsteilnehmer nicht am Überholen gehindert werden. Bei der Begleitung eines Kindes unter 12 Jahren durch eine Person, die mindestens 16 Jahre alt ist, ist das Fahren neben dem Kind, ausgenommen auf Schienenstraßen, zulässig. Beim Fahren neben einem anderen Radfahrer darf nur der äußerst rechte Fahrstreifen benützt werden und Fahrzeuge des Kraftfahrlinienverkehrs dürfen nicht behindert werden. Radfahrer in Gruppen ab zehn Personen ist das Queren einer Kreuzung im Verband durch den übrigen Fahrzeugverkehr zu erlauben. Dabei sind beim Einfahren in die Kreuzung die für Radfahrer geltenden Vorrangregeln zu beachten; der voran fahrende Radfahrer hat im Kreuzungsbereich den übrigen Fahrzeuglenkern das Ende der Gruppe durch Handzeichen zu signalisieren und erforderlichenfalls vom Fahrrad abzusteigen. Der erste und letzte Radfahrer der Gruppe haben dabei eine reflektierende Warnweste zu tragen.\n"+
+        "(3) Es ist verboten,\n"+
+        "a) auf einem Fahrrad freihändig zu fahren oder die Füße während der Fahrt von den Treteinrichtungen zu entfernen,\n"+
+        "b) sich mit einem Fahrrad an ein anderes Fahrzeug anzuhängen, um sich ziehen zu lassen,\n"+
+        "c) Fahrräder in einer nicht verkehrsgemäßen Art zu gebrauchen, zum Beispiel Karussellfahren, Wettfahren und dgl.,\n"+
+        "d) beim Radfahren andere Fahrzeuge oder Kleinfahrzeuge mitzuführen,\n"+
+        "e) während des Radfahrens ohne Benützung einer Freisprecheinrichtung zu telefonieren; hinsichtlich der Anforderungen für Freisprecheinrichtungen gilt § 102 Abs. 3 KFG 1967.\n"+
+        "(3a) Radfahrer dürfen sich Radfahrerüberfahrten, wo der Verkehr nicht durch Arm- oder Lichtzeichen geregelt wird, nur mit einer Geschwindigkeit von höchstens 10 km/h nähern und diese nicht unmittelbar vor einem herannahenden Fahrzeug und für dessen Lenker überraschend befahren, es sei denn, dass in unmittelbarer Nähe keine Kraftfahrzeuge aktuell fahren.\n"+
+        "(4) Fahrräder sind so aufzustellen, daß sie nicht umfallen oder den Verkehr behindern können. Ist ein Gehsteig mehr als 2,5 m breit, so dürfen Fahrräder auch auf dem Gehsteig abgestellt werden; dies gilt nicht im Haltestellenbereich öffentlicher Verkehrsmittel, außer wenn dort Fahrradständer aufgestellt sind. Auf einem Gehsteig sind Fahrräder platzsparend so aufzustellen, daß Fußgänger nicht behindert und Sachen nicht beschädigt werden.\n"+
+        "(5) Gegenstände, die am Anzeigen der Fahrtrichtungsänderung hindern oder die freie Sicht oder die Bewegungsfreiheit des Radfahrers beeinträchtigen oder Personen gefährden oder Sachen beschädigen können, wie zum Beispiel ungeschützte Sägen oder Sensen, geöffnete Schirme und dgl., dürfen am Fahrrad nicht mitgeführt werden.\n"+
+        "(6) Kinder unter 12 Jahren müssen beim Rad fahren, beim Transport in einem Fahrradanhänger und wenn sie auf einem Fahrrad mitgeführt werden, einen Sturzhelm in bestimmungsgemäßer Weise gebrauchen. Dies gilt nicht, wenn der Gebrauch des Helms wegen der körperlichen Beschaffenheit des Kindes nicht möglich ist. Wer ein Kind beim Rad fahren beaufsichtigt, auf einem Fahrrad mitführt oder in einem Fahrradanhänger transportiert, muss dafür sorgen, dass das Kind den Sturzhelm in bestimmungsgemäßer Weise gebraucht. Im Falle eines Verkehrsunfalls begründet das Nichttragen des Helms kein Mitverschulden im Sinne des § 1304 des allgemeinen bürgerlichen Gesetzbuches, JGS Nr. 946/1811, an den Folgen des Unfalls.";
+        law.Source = "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10011336";
+        Info returnval = await MongoUoW.Infos.InsertOneAsync(law);
+        Assert.NotNull(returnval);
+    }
+
+    [Test]
+    public async Task CreateLaw14()
+    {
+        Info law = new Info();
+
+        law.Category = Category.Law;
+        law.Section = "StVO VI. Abschnitt (Besondere Vorschriften für den Verkehr mit Fahrrädern und Motorfahrrädern)";
+        law.Title = "§ 69. Motorfahrräder";
+        law.Text = "(1) Mit Motorfahrrädern ist ausschließlich die Fahrbahn zu benützen.\n"+
+        "(2) Für die Lenker von Motorfahrrädern gelten die Bestimmungen des § 68 Abs. 3 bis 5 über das Verhalten von Radfahrern sinngemäß.\n"+
+        "Überdies ist ihnen verboten:\n"+
+        "a) Das Nebeneinanderfahren mit anderen Motorfahrrädern oder Fahrrädern,\n"+
+        "b) Motorfahrräder neben einem anderen Motorfahrrad oder Fahrrad zu schieben,\n"+
+        "(Anm.: lit. c aufgehoben durch BGBl. I Nr. 122/2022)";
+        law.Source = "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10011336";
+        Info returnval = await MongoUoW.Infos.InsertOneAsync(law);
+        Assert.NotNull(returnval);
+    }
 }
