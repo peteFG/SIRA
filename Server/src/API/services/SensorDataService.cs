@@ -39,10 +39,6 @@ public class SensorDataService
 
         //Take only 20 values that are closest to the average.
         coordListSpeed = RemoveOutliers(coordListSpeed);
-        // Commented out for now:
-        // For the mvp we take the first 20 elements of the lists
-        // afterwards, server side pagination is needed
-        //returnList.AddRange(coordListSpeed.Take(20).ToList());
         returnList.AddRange(coordListSpeed);
 
         var overTakeList = CategoriseOvertakes(overtakeDistances);
@@ -63,7 +59,7 @@ public class SensorDataService
 
         var valueDifference = type switch
         {
-            Type.Speed => Math.Round((decimal) (parsedCurrentValue - parsedNextValue), 2),
+            Type.Speed => Math.Round((decimal)(parsedCurrentValue - parsedNextValue), 2),
             _ => decimal.Zero
         };
         if (type == Type.Speed && Math.Abs(valueDifference) > 3)
@@ -80,11 +76,7 @@ public class SensorDataService
 
     private static List<SensorDataCoord> RemoveOutliers(List<SensorDataCoord> coordList)
     {
-        decimal coordDifferenceSum = 0;
-        foreach (var coord in coordList)
-        {
-            coordDifferenceSum += coord.Difference;
-        }
+        decimal coordDifferenceSum = coordList.Sum(coord => coord.Difference);
 
         var averageDifference = coordDifferenceSum / coordList.Count;
         coordList = coordList.OrderBy(coord => Math.Abs(averageDifference - coord.Difference)).Take(20).ToList();
@@ -167,5 +159,20 @@ public class SensorDataService
         }
 
         return overTakeList;
+    }
+
+    public List<DateTime> GetMinimumAndMaximumDate()
+    {
+        if (_allSensorDataPoints.IsNullOrEmpty())
+        {
+            return new List<DateTime>();
+        }
+        var sortedPoints = _allSensorDataPoints.Where(x => DateTime.Parse(x.Date) > new DateTime(2000, 1, 1)).ToList();
+        sortedPoints.Sort((x, y) => DateTime.Compare(DateTime.Parse(x.Date), DateTime.Parse(y.Date)));
+        return new List<DateTime>
+        {
+            DateTime.Parse(sortedPoints[sortedPoints.Count - 1].Date),
+            DateTime.Parse(sortedPoints[0].Date)
+        };
     }
 }

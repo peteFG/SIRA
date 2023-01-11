@@ -174,5 +174,16 @@ namespace API.Controllers
         {
             return Task.FromResult<ActionResult<ArrayList>>(SensorDataService.Instance.GetOvertakes());
         }
+
+        /// <summary>
+        /// Gets the minimum and maximum dates of all loaded data after the year 2000.
+        /// </summary>
+        [HttpGet("GetMinimumAndMaximumDate")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<DateTime>))]
+        public Task<ActionResult<List<DateTime>>> GetMinimumAndMaximumDate()
+        {
+            return Task.FromResult<ActionResult<List<DateTime>>>(SensorDataService.Instance
+                .GetMinimumAndMaximumDate());
+        }
     }
 }
