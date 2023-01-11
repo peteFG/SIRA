@@ -94,7 +94,7 @@ aid.Source="blutendeWunde.PNG";
             + "Weist der Betroffene eine Verletzung im Bereich des Brustkorbs oder der Lunge auf, wird er auf die verletzte Seite gedreht, damit die dann oben liegende, unbeeinträchtigte Lungenhälfte sich während der Einatmung frei entfalten kann und eventuelle Blutungen abgedrückt werden.\n\n"
             + "Schwangere Frauen werden tendenziell auf der linken Seite gelagert, da so der gemeinsame Kreislauf von Mutter und Fötus am besten entlastet werden kann.";
         aid.Icon = "lock-closed";
-        aid.Source = "Unfallstelle.jpp";
+        aid.Source = "Unfallstelle.jpg";
         Info returnval = await MongoUoW.Infos.InsertOneAsync(aid);
 
         Assert.NotNull(returnval);
