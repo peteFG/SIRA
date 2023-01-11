@@ -141,9 +141,9 @@ public class SensorDataService
             return new List<OvertakingDistance>();
         }
 
-        for (int rangeFrom = 0; rangeFrom < overtakeDistances.Max(); rangeFrom += 5)
+        for (int rangeFrom = 0; rangeFrom < overtakeDistances.Max(); rangeFrom += 10)
         {
-            var rangeTo = rangeFrom + 5;
+            var rangeTo = rangeFrom + 10;
             foreach (var overTakeDistance in overtakeDistances)
             {
                 if (overTakeDistance <= rangeFrom || overTakeDistance >= rangeTo) continue;

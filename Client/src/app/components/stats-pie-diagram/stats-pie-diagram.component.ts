@@ -1,32 +1,33 @@
 import { AfterViewInit, Component, Input } from '@angular/core';
 import { OvertakingDistance } from 'src/app/backend/sensor-data.service';
-import {  ChartConfiguration, ChartType, Color } from 'chart.js';
+import { ChartConfiguration, ChartType, Color } from 'chart.js';
 
 @Component({
   selector: 'stats-pie-diagram',
   templateUrl: './stats-pie-diagram.component.html',
   styleUrls: ['./stats-pie-diagram.component.scss'],
 })
-export class StatsPieDiagramComponent implements AfterViewInit{
+export class StatsPieDiagramComponent implements AfterViewInit {
   @Input() public data: OvertakingDistance[];
   public lineChartData: Array<number>;
   public lineChartLabels: Array<string>;
   public labelMFL: Array<any>;
 
   public ngAfterViewInit(): void {
-    const overMin = this.data.filter(item => item.rangeTo > 150).length;
-    this.lineChartData = [overMin, (this.data.length - overMin)];
-    this.lineChartLabels = ["Über 1.5m", "Unter 1.5m"];
+    const overMin = this.data.filter((item) => item.rangeTo > 150).length;
+    this.lineChartData = [overMin, this.data.length - overMin];
+    this.lineChartLabels = ['Über 1.5m', 'Unter 1.5m'];
 
     this.labelMFL = [
-      { data: this.lineChartData,
-        label: "Anzahl der Überholungen",
-        backgroundColor: ["#833737", "#537953"]
-      }
+      {
+        data: this.lineChartData,
+        label: 'Anzahl der Überholungen',
+        backgroundColor: ['#d91811', '#537953'],
+      },
     ];
   }
 
-  constructor(  ) { }
+  constructor() {}
 
   public lineChartOptions: ChartConfiguration['options'] = {
     responsive: true,
@@ -36,13 +37,13 @@ export class StatsPieDiagramComponent implements AfterViewInit{
         reverse: true,
         display: true,
         labels: {
-            boxWidth: 25,
-            font: {
-                size: 16
-            }
+          boxWidth: 25,
+          font: {
+            size: 20,
+          },
         },
       },
-    }
+    },
   };
 
   public chartType: ChartType = 'pie';

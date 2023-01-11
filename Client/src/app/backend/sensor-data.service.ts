@@ -18,9 +18,7 @@ export interface OvertakingDistance {
   type: string;
 }
 
-@Injectable(
-  { providedIn: 'root'}
-)
+@Injectable({ providedIn: 'root' })
 export class SensorDataService {
   private speedList = new BehaviorSubject<SensorDataCoord[]>([]);
   public speedList$ = this.speedList.asObservable();
@@ -28,7 +26,9 @@ export class SensorDataService {
   private altitudeList = new BehaviorSubject<SensorDataCoord[]>([]);
   public altitudeList$ = this.altitudeList.asObservable();
 
-  private overtakingDistanceList = new BehaviorSubject<OvertakingDistance[]>([]);
+  private overtakingDistanceList = new BehaviorSubject<OvertakingDistance[]>(
+    []
+  );
   public overtakingDistanceList$ = this.overtakingDistanceList.asObservable();
   constructor(private backendService: BackendService) {}
 
@@ -37,28 +37,36 @@ export class SensorDataService {
   }
 
   public loadSensorData() {
-    this.backendService.sensorData("LoadAllSensorDataPoints").then(() => {
+    this.backendService.sensorData('LoadAllSensorDataPoints').then(() => {
       this.loadOvertakes();
       this.loadSensorDataSpeed();
-    })
+    });
   }
 
   private loadOvertakes() {
-    this.backendService.sensorData("GetOvertakes").then(result => {
-      this.overtakingDistanceList.next( (result as any[]).filter(item => item.type === "OvertakingDistance") as OvertakingDistance[]);
-    })
+    this.backendService.sensorData('GetOvertakes').then((result) => {
+      this.overtakingDistanceList.next(
+        (result as any[]).filter(
+          (item) => item.type === 'OvertakingDistance'
+        ) as OvertakingDistance[]
+      );
+    });
   }
 
   public loadSensorDataSpeed() {
-      this.backendService.sensorData("GetNotableSpeedDifferences").then(result => {
-        let res = (result as any[]).filter(item => item.type === "Speed") as SensorDataCoord[];
-        res.forEach(item => {
-          this.backendService.getStreetName(item.xCoord, item.yCoord).then(res => {
-            // console.log("### ", (<any>res).result);
-          });
-          // item.desc =  await this.backendService.getStreetName(item.xCoord, item.yCoord)
-        });
+    this.backendService
+      .sensorData('GetNotableSpeedDifferences')
+      .then((result) => {
+        let res = (result as any[]).filter(
+          (item) => item.type === 'Speed'
+        ) as SensorDataCoord[];
+        // res.forEach(item => {
+        //   this.backendService.getStreetName(item.xCoord, item.yCoord).then(res => {
+        //     // console.log("### ", (<any>res).result);
+        //   });
+        //   // item.desc =  await this.backendService.getStreetName(item.xCoord, item.yCoord)
+        // });
         this.speedList.next(res);
-      })
+      });
   }
 }
