@@ -15,7 +15,7 @@ export class StatsBarDiagramComponent implements AfterViewInit{
 
   public ngAfterViewInit(): void {
     this.lineChartData = this.data.map(item => item.amount);
-    this.lineChartLabels = this.data.map(item => item.range + " m");
+    this.lineChartLabels = this.data.map(item => item.range + " cm");
     this.labelMFL = [
       { data: this.lineChartData,
         label: "Anzahl der Überholungen innerorts",

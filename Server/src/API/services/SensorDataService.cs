@@ -37,7 +37,6 @@ public class SensorDataService
                 Type.Speed);
         }
 
-        //Take only 20 values that are closest to the average.
         coordListSpeed = RemoveOutliers(coordListSpeed);
         returnList.AddRange(coordListSpeed);
 
@@ -59,7 +58,7 @@ public class SensorDataService
 
         var valueDifference = type switch
         {
-            Type.Speed => Math.Round((decimal)(parsedCurrentValue - parsedNextValue), 2),
+            Type.Speed => Math.Round((decimal) (parsedCurrentValue - parsedNextValue), 2),
             _ => decimal.Zero
         };
         if (type == Type.Speed && Math.Abs(valueDifference) > 3)
@@ -79,7 +78,10 @@ public class SensorDataService
         decimal coordDifferenceSum = coordList.Sum(coord => coord.Difference);
 
         var averageDifference = coordDifferenceSum / coordList.Count;
-        coordList = coordList.OrderBy(coord => Math.Abs(averageDifference - coord.Difference)).Take(20).ToList();
+        coordList = coordList.OrderBy(coord => Math.Abs(averageDifference - coord.Difference)).TakeWhile(coord =>
+            Math.Abs(averageDifference) - Math.Abs(coord.Difference) <= averageDifference * new decimal(1.5)).ToList();
+        //Reworked
+        //coordList = coordList.OrderBy(coord => Math.Abs(averageDifference - coord.Difference)).Take(20).ToList();
 
 
         return coordList;
@@ -133,9 +135,9 @@ public class SensorDataService
             return new List<OvertakingDistance>();
         }
 
-        for (int rangeFrom = 0; rangeFrom < overtakeDistances.Max(); rangeFrom += 10)
+        for (int rangeFrom = 0; rangeFrom < overtakeDistances.Max(); rangeFrom += 50)
         {
-            var rangeTo = rangeFrom + 10;
+            var rangeTo = rangeFrom + 50;
             foreach (var overTakeDistance in overtakeDistances)
             {
                 if (overTakeDistance <= rangeFrom || overTakeDistance >= rangeTo) continue;
@@ -167,6 +169,7 @@ public class SensorDataService
         {
             return new List<DateTime>();
         }
+
         var sortedPoints = _allSensorDataPoints.Where(x => DateTime.Parse(x.Date) > new DateTime(2000, 1, 1)).ToList();
         sortedPoints.Sort((x, y) => DateTime.Compare(DateTime.Parse(x.Date), DateTime.Parse(y.Date)));
         return new List<DateTime>
