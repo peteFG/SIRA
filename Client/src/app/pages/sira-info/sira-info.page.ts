@@ -16,8 +16,8 @@ export class SiraInfoPage {
   ) {
     this.sensorDataService.loadSensorDataRange();
     this.sensorDataService.dateRange$.subscribe((range) => {
-      this.dataStart = range[0];
-      this.dataEnd = range[1];
+      this.dataStart = range[1];
+      this.dataEnd = range[0];
     });
   }
 
