@@ -1,6 +1,6 @@
 {
-	"appId": "io.ionic.starter",
+	"appId": "sira",
 	"appName": "Client",
-	"webDir": "www",
+	"webDir": "dist\\angular-pwa",
 	"bundledWebRuntime": false
 }

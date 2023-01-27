@@ -20,7 +20,6 @@ export class InfoDetailComponent implements OnInit {
   ) {
     this.infoService.currentInfo$.subscribe((inf) => {
       this.info = inf;
-      console.log('### ', this.info);
       this.filteredInfo = inf;
     });
   }

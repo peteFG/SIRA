@@ -10,6 +10,7 @@ export interface Info {
   text: string;
   icon?: string;
   action?: string;
+  source?: string;
 }
 
 @Injectable({ providedIn: 'root' })
