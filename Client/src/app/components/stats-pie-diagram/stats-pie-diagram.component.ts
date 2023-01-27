@@ -14,15 +14,18 @@ export class StatsPieDiagramComponent implements AfterViewInit {
   public labelMFL: Array<any>;
 
   public ngAfterViewInit(): void {
-    const overMin = this.data.filter((item) => item.rangeTo > 150).length;
-    this.lineChartData = [overMin, this.data.length - overMin];
+    const overMin = this.data.filter((item) => item.rangeTo > 150)
+    .reduce((sum, current) => sum + current.amount, 0);
+    const underMin = this.data.filter((item) => item.rangeTo < 150)
+    .reduce((sum, current) => sum + current.amount, 0);
+    this.lineChartData = [overMin, underMin];
     this.lineChartLabels = ['Über 1.5m', 'Unter 1.5m'];
 
     this.labelMFL = [
       {
         data: this.lineChartData,
         label: 'Anzahl der Überholungen',
-        backgroundColor: ['#d91811', '#537953'],
+        backgroundColor: ['#537953', '#d91811'],
       },
     ];
   }
