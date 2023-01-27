@@ -1,11 +1,11 @@
 <ion-footer>
   <ion-toolbar class="toolbar-container">
     <div class="footer-menu-container">
-      <div (click)="onItemClicked('route')">
+      <div (click)="onItemClicked('route', true)">
         <ion-icon *ngIf="router.url.startsWith('/route')" name="map" class="footer-menu-icon"></ion-icon>
         <ion-icon *ngIf="!router.url.startsWith('/route')" name="map-outline" class="footer-menu-icon"></ion-icon>
       </div>
-      <div (click)="onItemClicked('stats')">
+      <div (click)="onItemClicked('stats', true)">
         <ion-icon *ngIf="router.url === '/stats'" name="pie-chart" class="footer-menu-icon"></ion-icon>
         <ion-icon *ngIf="router.url !== '/stats'" name="pie-chart-outline" class="footer-menu-icon"></ion-icon>
       </div>

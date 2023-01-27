@@ -18,8 +18,7 @@ export class StatsBarDiagramComponent implements AfterViewInit{
     this.lineChartLabels = this.data.map(item => item.range + " cm");
     this.labelMFL = [
       { data: this.lineChartData,
-        label: "Anzahl der Überholungen innerorts",
-        backgroundColor: ["#537953"]
+        backgroundColor: ["#d91811", "#d91811", "#d91811", "#537953", "#537953", "#537953", "#537953", "#537953", "#537953"]
       }
     ];
   }
@@ -44,7 +43,7 @@ export class StatsBarDiagramComponent implements AfterViewInit{
                 size: 16
             }
         },
-        display: true,
+        display: false,
       },
     }
   };

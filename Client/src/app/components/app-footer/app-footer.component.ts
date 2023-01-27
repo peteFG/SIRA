@@ -11,7 +11,10 @@ export class AppFooterComponent implements OnInit {
 
   ngOnInit() {}
 
-  public onItemClicked(route: string) {
-    this.router.navigate(['/'+route]);
+  public onItemClicked(route: string, reloadPage: boolean = false) {
+    if(reloadPage)
+      window.location.href = "/"+route;
+    else
+      this.router.navigate(['/'+route]);
   }
 }

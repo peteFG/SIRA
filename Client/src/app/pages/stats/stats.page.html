@@ -14,15 +14,19 @@
             </div>
             <div *ngIf="selValue === 'dangerZones'" style="height: 100%; width: 100%;">
                 <div class="map-sel-options-container">
-                    <div style="margin-right: .2em;     display: flex;"> <ion-checkbox class="checkbox-item"
-                            [(ngModel)]="isDangerZoneChecked">
+                    <div style="margin-right: .2em;     display: flex; align-items: center;"> <ion-checkbox
+                            class="checkbox-item" [(ngModel)]="isDangerZoneChecked">
                         </ion-checkbox>
                         <ion-label>Gefahrenstellen</ion-label>
+                        <img class="map-icon-ex" alt="Geschwindigkeitsunterschiede"
+                            src="../../../assets/marker/speed/speedometer_red.png" />
                     </div>
-                    <div style="margin-left: .2em;     display: flex;"> <ion-checkbox class="checkbox-item"
-                            [(ngModel)]="isSpeedChecked">
+                    <div style="margin-left: .2em;     display: flex; align-items: center;"> <ion-checkbox
+                            class="checkbox-item" [(ngModel)]="isSpeedChecked">
                         </ion-checkbox>
                         <ion-label>Geschwindigkeitsunterschiede</ion-label>
+                        <img class="map-icon-ex" alt="Geschwindigkeitsunterschiede"
+                            src="../../../assets/marker/alert-circle.png" />
                     </div>
                 </div>
                 <sira-map [showButton]="false" [showSpeed]="isSpeedChecked"

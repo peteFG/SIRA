@@ -11,7 +11,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "start-pwa": "ng build --configuration production && http-server -p 8080 -c-1 dist/angular-pwa",
-    "start-https": "ng serve --ssl --ssl-key d:\\certificates\\localhost.key  --ssl-cert d:\\certificates\\localhost.crt"
+    "start-https": "ng serve --ssl --ssl-key d:\\certificates\\localhost.key  --ssl-cert d:\\certificates\\localhost.crt",
+    "start-for-phone": "ng serve --host=0.0.0.0 --disable-host-check"
   },
   "private": true,
   "dependencies": {

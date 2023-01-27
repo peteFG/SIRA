@@ -5,7 +5,8 @@ import * as Nominatim from "nominatim-browser";
 
 @Injectable({ providedIn: 'root' })
 export class BackendService {
-  private backendUrl = 'http://localhost:5011/api/';
+  // private backendUrl = 'http://localhost:5011/api/';
+  private backendUrl = 'http://192.168.109.65:5011/api/';
   private sampleUrl = this.backendUrl + 'sample/';
   private infoUrl = this.backendUrl + 'Info/';
   private commonFilesUrl = this.backendUrl + 'CommonFiles/';
